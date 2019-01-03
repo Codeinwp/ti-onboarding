@@ -36,6 +36,7 @@ export default new Vuex.Store( {
 			customizer: true,
 			widgets: true,
 			installablePlugins: {},
+			isMigration: false,
 		},
 	},
 	actions,

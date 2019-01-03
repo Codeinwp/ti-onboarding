@@ -12,7 +12,7 @@
 							{{themeStrings.onboard_description}}</p>
 					</div>
 				</template>
-				<MigrateNotice></MigrateNotice>
+				<MigrateNotice :migration_data="migrationData"></MigrateNotice>
 				<template v-if="Object.keys(themeStrings).length">
 				<h3 v-if="containsKey(themeStrings, 'templates_title')">{{themeStrings.templates_title}}</h3>
 				<p v-if="containsKey(themeStrings, 'templates_description')">{{themeStrings.templates_description}}</p>
@@ -61,7 +61,10 @@
 			},
 			themeStrings: function () {
 				return this.$store.state.sitesData.i18n
-			}
+			},
+			migrationData: function () {
+				return this.$store.state.sitesData.migrate_data
+			},
 		},
 		methods: {
 			cancelOnboarding: function () {

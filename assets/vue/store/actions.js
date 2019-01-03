@@ -65,7 +65,11 @@ const installPlugins = function ( { commit, state }, data ) {
 	} ).then( function ( response ) {
 		if ( response.ok ) {
 			console.log( '%c Installed Plugins.', 'color: #4B9BE7' );
-			importContent( { commit, state }, data );
+			if( state.importOptions.isMigration === true ){
+				migrateTemplate( { commit, state }, data );
+			} else {
+				importContent( { commit, state }, data );
+			}
 		} else {
 			console.error( response );
 		}

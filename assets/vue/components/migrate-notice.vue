@@ -46,12 +46,27 @@
 				dismissed: false,
 			}
 		},
+		props: {
+			migration_data: {
+				default: {},
+				type: Object,
+				required: true,
+			},
+		},
 		computed: {
 			migrationData: function () {
 				return this.$store.state.sitesData.migrate_data
 			},
 		},
 		methods: {
+			setupMigrationData: function () {
+				let plugins = Object.keys( this.migration_data.recommended_plugins ).reduce( function ( previous, current ) {
+					previous[ current ] = true;
+					return previous;
+				}, {} );
+
+				this.$store.commit( 'updatePlugins', plugins );
+			},
 			dismissMigration: function (  ) {
 				this.dismissed = true;
 				this.$store.dispatch( 'dismissMigration', {
@@ -60,12 +75,14 @@
 				} )
 			},
 			runMigration: function () {
+				this.setupMigrationData();
+				this.$store.commit( 'updateMigration', true );
 				this.$store.state.migration = 'isRunning';
-				this.$store.dispatch( 'migrateTemplate', {
+				this.$store.dispatch( 'importSite', {
 					req: 'Migrate Site',
 					template: this.migrationData.template,
 					template_name: this.migrationData.template_name,
-				} );
+				} )
 			},
 			redirectToHome: function () {
 				window.location.replace( this.$store.state.homeUrl );
