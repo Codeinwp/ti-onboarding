@@ -328,7 +328,6 @@ a.expander {
 		margin-bottom: 0;
 	}
 
-	.is__onboarding .ti-sites-lib > div,
 	.migrate-notice .ti-sites-lib > div{
 		width: 48%;
 	}
@@ -349,6 +348,9 @@ a.expander {
 }
 
 @media ( max-width: 768px ) {
+	.templates-wrapper{
+		grid-template-columns: 1fr 1fr;
+	}
 	.ti-sites-lib {
 		grid-column-gap: 0;
 		-ms-grid-columns: (minmax(100%, 1fr))[auto-fill];
@@ -360,8 +362,6 @@ a.expander {
 	}
 
 	.ti-sites-lib .site-box img {
-		width: 1000px;
-
 		object-fit: cover;
 	}
 
@@ -380,20 +380,6 @@ a.expander {
 
 	.import-modal__wrapper .modal__item {
 		width: 95%;
-	}
-
-	.is__onboarding .ti-sites-lib > div {
-		width: 48%;
-		margin-right: 4%;
-	}
-
-	.is__onboarding .ti-sites-lib > div:nth-child(3n) {
-		margin-right: 4%;
-	}
-
-	.is__onboarding .ti-sites-lib > div:nth-child(2n),
-	.is__onboarding .ti-sites-lib > div:last-child {
-		margin-right: 0;
 	}
 
 	.migrate-notice .ti-sites-lib > div{
@@ -417,7 +403,9 @@ a.expander {
 }
 
 @media (max-width: 580px) {
-	.is__onboarding .ti-sites-lib > div,
+	.templates-wrapper{
+		grid-template-columns: 1fr;
+	}
 	.is__onboarding .migrate-notice .ti-sites-lib > div{
 		width: 100%;
 		margin-right: 0 !important;
