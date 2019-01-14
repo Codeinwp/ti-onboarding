@@ -91,9 +91,15 @@ const migrateTemplate = function ( { commit, state }, data ) {
 		},
 		responseType: 'json',
 	} ).then( function ( response ) {
+		console.log(response);
 		if ( response.ok ) {
 			console.log( '%c Imported front page.', 'color: #4B9BE7' );
 			commit( 'migrationComplete', 'done');
+			console.log(response.body.data);
+			if( response.body.data ){
+				commit( 'setFrontPageId', response.body.data);
+			}
+			doneImport( { commit } );
 		} else {
 			console.error( response );
 		}

@@ -80,6 +80,9 @@ The `data.json` file you deliver should respect the following format:
       "woocommerce_widget_cart-5": []
     }
   },
+  "mandatory_plugins": {
+    "elementor": "Elementor Page Builder",
+  },
   "recommended_plugins": {
     "woocommerce": "WooCommerce",
     "themeisle-companion": "Orbit Fox by ThemeIsle"

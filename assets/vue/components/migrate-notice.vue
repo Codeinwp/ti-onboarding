@@ -1,27 +1,27 @@
 <template>
-	<div class="migrate-notice" v-if="Object.keys(this.migrationData).length && !dismissed">
+	<div class="migrate-notice" v-if="Object.keys(this.migration_data).length && !dismissed">
 		<a class="migration-dismiss"
 				aria-label="Dismiss the migration notice" @click="dismissMigration()">{{ strings.dismiss}}</a>
 
 
 			<div class="migrate-text">
-				<h3>{{migrationData.heading}}</h3>
-				<p>{{migrationData.description}}</p>
+				<h3>{{this.migration_data.heading}}</h3>
+				<p>{{this.migration_data.description}}</p>
 
 				<div class="ti-sites-lib">
 					<div class="site-box migrate-screenshot">
 						<div class="preview-image">
-							<img :src="migrationData.screenshot" :alt="migrationData.theme_name">
+							<img :src="this.migration_data.screenshot" :alt="this.migration_data.title">
 						</div>
 						<div class="footer">
-							<h4>{{migrationData.theme_name}}</h4>
+							<h4>{{this.migration_data.title}}</h4>
 						</div>
 					</div>
 				</div>
 
 				<p class="button-wrapper">
-					<button v-if="this.$store.state.migration === 'inactive'" class="button button-hero" @click="runMigration()">
-						{{strings.import_btn}} {{migrationData.theme_name}}
+					<button v-if="this.$store.state.migration === 'inactive'" class="button button-hero" @click="importSite()">
+						{{strings.import_btn}} {{this.migration_data.title}}
 					</button>
 					<button v-else-if="this.$store.state.migration === 'isRunning'" class="button button-hero">
 						<Loader class="loader" :loading-message="strings.importing"></Loader>
@@ -53,17 +53,24 @@
 				required: true,
 			},
 		},
-		computed: {
-			migrationData: function () {
-				return this.$store.state.sitesData.migrate_data
-			},
-		},
 		methods: {
 			setupMigrationData: function () {
-				let plugins = Object.keys( this.migration_data.recommended_plugins ).reduce( function ( previous, current ) {
-					previous[ current ] = true;
-					return previous;
-				}, {} );
+				let recommended_plugins, mandatory_plugins = {};
+
+				if( Object.keys(this.migration_data).includes( 'recommended_plugins' ) ) {
+					recommended_plugins = Object.keys( this.migration_data.recommended_plugins ).reduce( function ( previous, current ) {
+						previous[ current ] = true;
+						return previous;
+					}, {} );
+				}
+
+				if( Object.keys(this.migration_data).includes( 'mandatory_plugins' ) ) {
+					mandatory_plugins = Object.keys( this.migration_data.mandatory_plugins ).reduce( function ( previous, current ) {
+						previous[ current ] = true;
+						return previous;
+					}, {} );
+				}
+				let plugins = Object.assign({}, mandatory_plugins, recommended_plugins );
 
 				this.$store.commit( 'updatePlugins', plugins );
 			},
@@ -71,21 +78,16 @@
 				this.dismissed = true;
 				this.$store.dispatch( 'dismissMigration', {
 					req: 'Dismiss Migration',
-					theme_mod: this.migrationData.theme_mod,
-				} )
-			},
-			runMigration: function () {
-				this.setupMigrationData();
-				this.$store.commit( 'updateMigration', true );
-				this.$store.state.migration = 'isRunning';
-				this.$store.dispatch( 'importSite', {
-					req: 'Migrate Site',
-					template: this.migrationData.template,
-					template_name: this.migrationData.template_name,
+					theme_mod: this.migration_data.theme_mod,
 				} )
 			},
 			redirectToHome: function () {
 				window.location.replace( this.$store.state.homeUrl );
+			},
+			importSite: function() {
+				this.setupMigrationData();
+				this.$store.commit( 'populatePreview', this.migration_data );
+				this.$store.commit( 'showImportModal', true );
 			},
 		},
 		components: {

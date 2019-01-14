@@ -256,14 +256,14 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		return array(
-			'theme_name'          => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
+			'title'          => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
 			'screenshot'          => get_template_directory_uri() . '/vendor/codeinwp/ti-onboarding/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
 			'template'            => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
 			'template_name'       => $data[ $old_theme ]['template'],
 			'heading'             => $data[ $old_theme ]['heading'],
 			'description'         => $data[ $old_theme ]['description'],
 			'theme_mod'           => $data[ $old_theme ]['theme_mod_check'],
-			'recommended_plugins' => $data[ $old_theme ]['plugins'],
+			'mandatory_plugins'   => $data[ $old_theme ]['plugins'],
 		);
 	}
 
