@@ -263,7 +263,7 @@ class Themeisle_OB_Rest_Server {
 			'heading'             => $data[ $old_theme ]['heading'],
 			'description'         => $data[ $old_theme ]['description'],
 			'theme_mod'           => $data[ $old_theme ]['theme_mod_check'],
-			'mandatory_plugins'   => $data[ $old_theme ]['plugins'],
+			'mandatory_plugins'   => $data[ $old_theme ]['mandatory_plugins'],
 		);
 	}
 
