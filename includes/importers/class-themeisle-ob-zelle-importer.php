@@ -108,6 +108,7 @@ class Themeisle_OB_Zelle_Importer {
 		if ( $post_id ) {
 			// * Mark the import as success and update the flag option to true.
 			set_theme_mod( 'zelle_frontpage_was_imported', 'yes' );
+			set_theme_mod( 'zerif_frontpage_was_imported', 'yes' );
 
 			update_option( 'page_on_front', $post_id );
 			update_option( 'show_on_front', 'page' );
