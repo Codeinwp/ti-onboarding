@@ -40,7 +40,7 @@
 							</template>
 							<h4>{{strings.plugins}}:</h4>
 							<ul class="features">
-								<li v-if="Object.keys( siteData ).includes( 'mandatory_plugins' )" class="option_toggle" v-for="( plugin, index ) in siteData.mandatory_plugins">
+								<li v-if="siteData.mandatory_plugins" class="option_toggle" v-for="( plugin, index ) in siteData.mandatory_plugins">
 									<label class="option-toggle-label ellipsis">
 										<span class="dashicons dashicons-admin-plugins"></span>
 										{{plugin}}
@@ -154,12 +154,11 @@
 				this.$store.commit( 'showImportModal', false )
 			},
 			startImport: function () {
-				if( Object.keys( this.siteData ).includes( 'template_name' ) ){
+				if( this.siteData.template_name ){
 					this.runMigration();
 				} else {
 					this.$store.dispatch( 'importSite', {
 						req: 'Import Site',
-						plugins: this.siteData.recommended_plugins,
 						content: {
 							'content_file': this.siteData.content_file,
 							'front_page': this.siteData.front_page,

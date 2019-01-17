@@ -35,12 +35,26 @@
 		},
 		methods: {
             setupImportData: function () {
-				let plugins = Object.keys( this.site_data.recommended_plugins ).reduce( function ( previous, current ) {
-					previous[ current ] = true;
-					return previous;
-				}, {} );
 
-				this.$store.commit( 'updatePlugins', plugins );
+	            let recommended_plugins, mandatory_plugins = {};
+
+	            if( this.site_data.recommended_plugins ) {
+		            recommended_plugins = Object.keys( this.site_data.recommended_plugins ).reduce( function ( previous, current ) {
+			            previous[ current ] = true;
+			            return previous;
+		            }, {} );
+	            }
+
+	            if( this.site_data.mandatory_plugins ) {
+		            recommended_plugins = Object.keys( this.site_data.mandatory_plugins ).reduce( function ( previous, current ) {
+			            previous[ current ] = true;
+			            return previous;
+		            }, {} );
+	            }
+
+	            let plugins = Object.assign({}, mandatory_plugins, recommended_plugins );
+
+	            this.$store.commit( 'updatePlugins', plugins );
 			},
             importSite: function() {
                 this.setupImportData();

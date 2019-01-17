@@ -57,14 +57,14 @@
 			setupMigrationData: function () {
 				let recommended_plugins, mandatory_plugins = {};
 
-				if( Object.keys(this.migration_data).includes( 'recommended_plugins' ) ) {
+				if( this.migration_data.recommended_plugins ) {
 					recommended_plugins = Object.keys( this.migration_data.recommended_plugins ).reduce( function ( previous, current ) {
 						previous[ current ] = true;
 						return previous;
 					}, {} );
 				}
 
-				if( Object.keys(this.migration_data).includes( 'mandatory_plugins' ) ) {
+				if( this.migration_data.mandatory_plugins ) {
 					mandatory_plugins = Object.keys( this.migration_data.mandatory_plugins ).reduce( function ( previous, current ) {
 						previous[ current ] = true;
 						return previous;
