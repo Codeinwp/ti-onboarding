@@ -113,6 +113,9 @@
       }
     },
     computed: {
+	  defaultTemplate: function () {
+		  return this.$store.state.sitesData
+	  },
       allPlugins () {
         return {
           recommended: this.siteData.recommended_plugins,
@@ -211,6 +214,7 @@
       editTemplate: function () {
         var editor = this.getEditor()
         var pageId = this.getPageId()
+	    let customizerRedirect = this.siteData.edit_content_redirect;
         var url = this.homeUrl
         if (editor === 'elementor' || this.isMigration) {
           url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=elementor'
@@ -218,6 +222,9 @@
         if (editor === 'gutenberg') {
           url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=edit'
         }
+        if ( customizerRedirect === 'customizer' ) {
+		  url = this.homeUrl + '/wp-admin/customize.php'
+		}
         window.location.replace(url)
       }
     },
