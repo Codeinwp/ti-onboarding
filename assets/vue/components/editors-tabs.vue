@@ -18,10 +18,14 @@
 		<template v-for="editor in editors">
 			<tab v-bind:name="editor">
 				<!-- To enable search in tab, uncomment the following lines -->
-				<!--<div class="template-search-wrapper">
-						<input type="text" v-model="search" v-bind:placeholder="strings.search + '...'"
-								class="template-search">
-					</div>-->
+				<!--<div class="template-search-wrapper">-->
+				<!--<input type="text" v-model="search" v-bind:placeholder="strings.search + '...'"-->
+				<!--class="template-search">-->
+				<!--</div>-->
+
+				<div class="listing-demo templates-wrapper" v-if="listingDemo[editor]">
+					<SiteItem :site-data="listingDemo[editor]"></SiteItem>
+				</div>
 				<div class="templates-wrapper">
 					<template v-for="(data, index) in sites">
 						<template v-for="(editor_sites, site_editor) in data">
@@ -57,10 +61,13 @@
         let local = this.$store.state.sitesData.local
         let remote = this.$store.state.sitesData.remote
         let upsell = this.$store.state.sitesData.upsell
-        return { local, remote, upsell }
+        return {local, remote, upsell}
       },
       onboard: function () {
         return this.$store.state.onboard
+      },
+      listingDemo: function () {
+        return this.$store.state.sitesData.listing_demo
       }
     },
     methods: {

@@ -15,7 +15,11 @@
 h4 {
   margin: 0;
 }
-
+.listing-demo .site-box {
+  margin: 0 auto;
+  border-color: $primary;
+  box-shadow: 0 0 10px -5px transparentize($primary, 0);
+}
 .site-box {
   border: 1px solid #ccc;
   margin-bottom: 25px;
