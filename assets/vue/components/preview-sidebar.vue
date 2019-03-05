@@ -38,7 +38,8 @@
         this.$store.commit('showImportModal', true)
       },
       buyPro: function () {
-        var win = window.open(this.$store.state.sitesData.pro_link, '_blank')
+        let link = this.site_data.outbound_link ? this.site_data.outbound_link : this.$store.state.sitesData.pro_link
+        let win = window.open(link, '_blank')
         win.focus()
       }
     }

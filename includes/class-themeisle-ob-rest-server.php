@@ -401,6 +401,7 @@ class Themeisle_OB_Rest_Server {
 		if ( $this->valid_lic === true ) {
 			return array();
 		}
+
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
@@ -417,12 +418,17 @@ class Themeisle_OB_Rest_Server {
 				if ( empty( $request['body'] ) || ! isset( $request['body'] ) ) {
 					continue;
 				}
-				$returnable[ $editor ][ $template_slug ]               = json_decode( $request['body'], true );
-				$returnable[ $editor ][ $template_slug ]['title']      = esc_html( $template_data['title'] );
-				$returnable[ $editor ][ $template_slug ]['demo_url']   = esc_url( $template_data['url'] );
-				$returnable[ $editor ][ $template_slug ]['screenshot'] = esc_url( $template_data['screenshot'] );
-				$returnable[ $editor ][ $template_slug ]['source']     = 'remote';
-				$returnable[ $editor ][ $template_slug ]['in_pro']     = true;
+				$returnable[ $editor ][ $template_slug ]                  = json_decode( $request['body'], true );
+				$returnable[ $editor ][ $template_slug ]['title']         = esc_html( $template_data['title'] );
+				$returnable[ $editor ][ $template_slug ]['demo_url']      = esc_url( $template_data['url'] );
+				$returnable[ $editor ][ $template_slug ]['screenshot']    = esc_url( $template_data['screenshot'] );
+				$returnable[ $editor ][ $template_slug ]['source']        = 'remote';
+				$returnable[ $editor ][ $template_slug ]['in_pro']        = true;
+				$returnable[ $editor ][ $template_slug ]['outbound_link'] = add_query_arg( array(
+					'utm_medium'   => 'about-' . get_template(),
+					'utm_source'   => $template_slug,
+					'utm_campaign' => 'siteslibrary',
+				), $this->theme_support['pro_link'] );
 			}
 		}
 
