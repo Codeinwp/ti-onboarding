@@ -4,8 +4,8 @@
  * Created on:      12/07/2018
  *
  * @package themeisle-onboarding
- * @phpcs:disable Squiz.Commenting.FunctionComment.Missing
- * @phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+ * @phpcs   :disable Squiz.Commenting.FunctionComment.Missing
+ * @phpcs   :disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
  * todo: clean up for both phpcs rules.
  */
 
@@ -581,7 +581,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 		}
 
 		$post_exists = $this->post_exists( $data );
-		if ( $post_exists ) {
+		if ( $post_exists && $data['post_type'] !== 'page' ) {
 			/**
 			 * Post processing already imported.
 			 *
