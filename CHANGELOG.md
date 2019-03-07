@@ -1,3 +1,11 @@
+## [1.2.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.2.0...v1.2.1) (2019-03-07)
+
+
+### Bug Fixes
+
+* allow import if last front page was trashed ([17d921a](https://github.com/Codeinwp/ti-onboarding/commit/17d921a))
+* allow jpg screenshots ([8f2edf7](https://github.com/Codeinwp/ti-onboarding/commit/8f2edf7))
+
 # [1.2.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.1.1...v1.2.0) (2019-03-01)
 
 
