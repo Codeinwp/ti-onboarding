@@ -335,7 +335,6 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['source']                = 'local';
 				$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = '';
 
-
 				$ss_extension = '.png';
 				if ( file_exists( get_template_directory() . '/onboarding/' . $template_slug . '/screenshot.jpg' ) ) {
 					$ss_extension = '.jpg';
@@ -424,11 +423,14 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['screenshot']    = esc_url( $template_data['screenshot'] );
 				$returnable[ $editor ][ $template_slug ]['source']        = 'remote';
 				$returnable[ $editor ][ $template_slug ]['in_pro']        = true;
-				$returnable[ $editor ][ $template_slug ]['outbound_link'] = add_query_arg( array(
-					'utm_medium'   => 'about-' . get_template(),
-					'utm_source'   => $template_slug,
-					'utm_campaign' => 'siteslibrary',
-				), $this->theme_support['pro_link'] );
+				$returnable[ $editor ][ $template_slug ]['outbound_link'] = add_query_arg(
+					array(
+						'utm_medium'   => 'about-' . get_template(),
+						'utm_source'   => $template_slug,
+						'utm_campaign' => 'siteslibrary',
+					),
+					$this->theme_support['pro_link']
+				);
 			}
 		}
 
