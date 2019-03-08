@@ -75,14 +75,12 @@ h4 {
   .templates-wrapper {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-around;
-
     > div {
       flex: 49%;
       max-width: 49%;
 
-      &:nth-child(even) {
-        margin-left: 2%;
+      &:nth-child(odd) {
+        margin-right: 2%;
       }
     }
   }
@@ -90,14 +88,12 @@ h4 {
 
 @mixin layout--desktop() {
   .templates-wrapper {
-    justify-content: space-between;
-
     > div {
       flex: 32%;
       max-width: 32%;
-
-      &:nth-child(even ) {
-        margin-left: 0;
+      margin-right: 2%;
+      &:nth-child(3n+3) {
+        margin-right: 0;
       }
     }
   }
