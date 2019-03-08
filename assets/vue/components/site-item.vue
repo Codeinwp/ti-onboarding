@@ -40,7 +40,8 @@
       setupImportData: function () {
         let recommended = this.siteData.recommended_plugins ? this.siteData.recommended_plugins : {}
         let mandatory = this.siteData.mandatory_plugins ? this.siteData.mandatory_plugins : {}
-        let plugins = getInstallablePlugins(mandatory, recommended)
+        let defaultOff = this.siteData.default_off_recommended_plugins ? this.siteData.default_off_recommended_plugins : []
+        let plugins = getInstallablePlugins(mandatory, recommended, defaultOff)
         this.$store.commit('updatePlugins', plugins)
       },
       importSite: function () {
