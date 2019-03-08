@@ -1,3 +1,24 @@
+## [1.2.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.2.0...v1.2.1) (2019-03-07)
+
+
+### Bug Fixes
+
+* allow import if last front page was trashed ([17d921a](https://github.com/Codeinwp/ti-onboarding/commit/17d921a))
+* allow jpg screenshots ([8f2edf7](https://github.com/Codeinwp/ti-onboarding/commit/8f2edf7))
+
+# [1.2.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.1.1...v1.2.0) (2019-03-01)
+
+
+### Bug Fixes
+
+* proper place for filter in code ([5b2ad1e](https://github.com/Codeinwp/ti-onboarding/commit/5b2ad1e))
+
+
+### Features
+
+* add active demo handling for showcasing listing demo ([17af076](https://github.com/Codeinwp/ti-onboarding/commit/17af076))
+* add filter to allow the disabling of the onboarding [#13](https://github.com/Codeinwp/ti-onboarding/issues/13) ([0d55b32](https://github.com/Codeinwp/ti-onboarding/commit/0d55b32))
+
 ## [1.1.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.1.0...v1.1.1) (2019-02-05)
 
 
