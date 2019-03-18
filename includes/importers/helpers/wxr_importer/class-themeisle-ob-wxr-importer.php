@@ -1288,6 +1288,12 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 				if ( isset( $this->mapping['post'][ $menu_object_id ] ) ) {
 					$menu_object = $this->mapping['post'][ $menu_object_id ];
 				}
+
+				if ( get_post_status( $this->mapping['post'][ $menu_object_id ] ) === false ) {
+					$menu_object = array();
+					wp_delete_post( $post_id );
+				}
+
 				break;
 			default:
 				// Cannot handle this.
