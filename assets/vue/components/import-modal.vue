@@ -81,11 +81,11 @@
 					</button>
 				</template>
 				<template v-else-if="currentStep === 'error'">
-					<button class="button button-secondary" v-on:click="resetImport">{{strings.back}}</button>
+					<button class="button button-secondary" v-on:click="resetImport">{{strings.back_to_library}}</button>
 				</template>
 				<template v-else>
 					<button class="button button-link" v-if="this.$store.state.onboard !== 'yes'"
-							v-on:click="resetImport">{{strings.back}}
+							v-on:click="resetImport">{{strings.back_to_library}}
 					</button>
 					<button class="button button-secondary" v-on:click="redirectToHome">{{strings.go_to_site}}</button>
 					<button class="button button-primary" v-on:click="editTemplate">{{strings.edit_template}}</button>
@@ -173,7 +173,6 @@
           return false
         }
         this.$store.commit('showImportModal', false)
-        this.resetImport()
       },
       runMigration: function () {
         this.$store.state.importOptions.isMigration = true
