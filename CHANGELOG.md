@@ -1,3 +1,18 @@
+# [1.3.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.2.1...v1.3.0) (2019-03-18)
+
+
+### Bug Fixes
+
+* don't import menu items if post/page isn't imported [[#38](https://github.com/Codeinwp/ti-onboarding/issues/38)] ([f57c347](https://github.com/Codeinwp/ti-onboarding/commit/f57c347))
+* items layout when not all rows are full [[#31](https://github.com/Codeinwp/ti-onboarding/issues/31)] ([149563f](https://github.com/Codeinwp/ti-onboarding/commit/149563f))
+* plugins installing even when they shouldn't ([f44f21f](https://github.com/Codeinwp/ti-onboarding/commit/f44f21f))
+
+
+### Features
+
+* allow default off plugiins, exclude shop pages when no woocommerce ([e21e1a5](https://github.com/Codeinwp/ti-onboarding/commit/e21e1a5))
+* better ui/ux for sites library [[#37](https://github.com/Codeinwp/ti-onboarding/issues/37), [#36](https://github.com/Codeinwp/ti-onboarding/issues/36)] ([72632e4](https://github.com/Codeinwp/ti-onboarding/commit/72632e4))
+
 ## [1.2.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.2.0...v1.2.1) (2019-03-07)
 
 
