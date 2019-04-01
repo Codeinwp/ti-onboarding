@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.0...v1.3.1) (2019-04-01)
+
+
+### Bug Fixes
+
+* theme mod image urls import issue ([d9296ff](https://github.com/Codeinwp/ti-onboarding/commit/d9296ff))
+
 # [1.3.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.2.1...v1.3.0) (2019-03-18)
 
 
