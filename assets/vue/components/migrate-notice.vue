@@ -58,7 +58,6 @@
       dismissMigration: function () {
         this.dismissed = true
         this.$store.dispatch('dismissMigration', {
-          req: 'Dismiss Migration',
           theme_mod: this.migrationData.theme_mod
         })
       },
