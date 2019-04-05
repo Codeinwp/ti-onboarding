@@ -1,3 +1,11 @@
+## [1.3.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.1...v1.3.2) (2019-04-05)
+
+
+### Performance Improvements
+
+* bump requests timeout ([7bf12b6](https://github.com/Codeinwp/ti-onboarding/commit/7bf12b6))
+* remove  param from requests ([ee3b5df](https://github.com/Codeinwp/ti-onboarding/commit/ee3b5df))
+
 ## [1.3.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.0...v1.3.1) (2019-04-01)
 
 
