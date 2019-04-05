@@ -178,7 +178,6 @@
         this.$store.state.importOptions.isMigration = true
         this.$store.state.migration = 'isRunning'
         this.$store.dispatch('importSite', {
-          req: 'Migrate Site',
           template: this.siteData.template,
           template_name: this.siteData.template_name
         })
@@ -189,7 +188,6 @@
           return false
         }
         this.$store.dispatch('importSite', {
-          req: 'Import Site',
           plugins: this.siteData.recommended_plugins,
           content: {
             'content_file': this.siteData.content_file,

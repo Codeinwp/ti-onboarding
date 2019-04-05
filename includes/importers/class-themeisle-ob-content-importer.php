@@ -54,7 +54,7 @@ class Themeisle_OB_Content_Importer {
 			);
 		}
 
-		set_time_limit( 10000 );
+		set_time_limit( 0 );
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		require_once( ABSPATH . 'wp-admin/includes/media.php' );
@@ -225,7 +225,7 @@ class Themeisle_OB_Content_Importer {
 	 * Import file
 	 *
 	 * @param string $file_path the file path to import.
-	 * @param array $req_body the request body to be passed to the alterator.
+	 * @param array  $req_body  the request body to be passed to the alterator.
 	 *
 	 * @return WP_Error|true
 	 */

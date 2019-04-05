@@ -216,7 +216,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 	 */
 	public function import( $file ) {
 		add_filter( 'import_post_meta_key', array( $this, 'is_valid_meta_key' ) );
-		add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
+		add_filter( 'http_request_timeout', array( $this, 'bump_request_timeout' ), PHP_INT_MAX );
 
 		$result = $this->import_start( $file );
 		if ( is_wp_error( $result ) ) {
@@ -345,6 +345,7 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 		wp_defer_term_counting( true );
 		wp_defer_comment_counting( true );
 		wp_suspend_cache_invalidation( true );
+		set_time_limit( 0 );
 
 		// Prefill exists calls if told to
 		if ( $this->options['prefill_existing_posts'] ) {
@@ -1375,10 +1376,10 @@ class Themeisle_OB_WXR_Importer extends WP_Importer {
 	 * Added to http_request_timeout filter to force timeout at 60 seconds during import
 	 *
 	 * @access protected
-	 * @return int 60
+	 * @return int 180
 	 */
 	function bump_request_timeout( $val ) {
-		return 60;
+		return 180;
 	}
 
 	/**
