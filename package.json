@@ -25,6 +25,7 @@
     "browserify-hmr": "^0.3.1",
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.0",
+    "cypress": "^3.2.0",
     "envify": "^3.4.1",
     "eslint": "^3.3.0",
     "eslint-config-standard": "^5.3.5",
