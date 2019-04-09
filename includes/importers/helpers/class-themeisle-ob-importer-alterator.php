@@ -51,6 +51,7 @@ class Themeisle_OB_Importer_Alterator {
 		add_filter( 'wxr_importer.pre_process.post', array( $this, 'skip_posts' ), 10, 4 );
 		add_filter( 'wxr_importer.pre_process.term', array( $this, 'skip_terms' ), 10, 2 );
 		add_filter( 'wp_insert_post_data', array( $this, 'encode_post_content' ), 10, 2 );
+		add_filter( 'intermediate_image_sizes_advanced', '__return_null' );
 	}
 
 	/**
