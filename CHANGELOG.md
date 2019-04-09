@@ -1,3 +1,11 @@
+## [1.3.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.2...v1.3.3) (2019-04-09)
+
+
+### Bug Fixes
+
+* disable image sizes generation on import [[#47](https://github.com/Codeinwp/ti-onboarding/issues/47)] ([e75a42d](https://github.com/Codeinwp/ti-onboarding/commit/e75a42d))
+* orphaned button [[#46](https://github.com/Codeinwp/ti-onboarding/issues/46)] ([222cd2f](https://github.com/Codeinwp/ti-onboarding/commit/222cd2f))
+
 ## [1.3.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.1...v1.3.2) (2019-04-05)
 
 
