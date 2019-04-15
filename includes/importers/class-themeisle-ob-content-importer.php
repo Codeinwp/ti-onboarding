@@ -236,9 +236,9 @@ class Themeisle_OB_Content_Importer {
 		$this->load_importer();
 
 		require_once 'helpers/class-themeisle-ob-importer-alterator.php';
-		new Themeisle_OB_Importer_Alterator( $req_body );
+		$alterator = new Themeisle_OB_Importer_Alterator( $req_body );
 
-		$importer = new Themeisle_OB_WXR_Importer();
+		$importer = new Themeisle_OB_WP_Import();
 		$result   = $importer->import( $file_path );
 
 		return $result;
@@ -248,12 +248,8 @@ class Themeisle_OB_Content_Importer {
 	 * Load the importer.
 	 */
 	private function load_importer() {
-		if ( ! class_exists( 'WP_Importer' ) ) {
-			defined( 'WP_LOAD_IMPORTERS' ) || define( 'WP_LOAD_IMPORTERS', true );
-			require ABSPATH . '/wp-admin/includes/class-wp-importer.php';
-		}
-		require dirname( __FILE__ ) . '/helpers/wxr_importer/class-themeisle-ob-wxr-importer.php';
-		require dirname( __FILE__ ) . '/helpers/wxr_importer/class-themeisle-ob-wxr-import-info.php';
+		require dirname( __FILE__ ) . '/helpers/wp-importer/class-themeisle-ob-wordpress-import.php';
+		require dirname( __FILE__ ) . '/helpers/wp-importer/parsers.php';
 	}
 
 }
