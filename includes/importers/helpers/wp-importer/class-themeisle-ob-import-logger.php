@@ -5,69 +5,115 @@
  * @package class-themeisle-ob-import-logger.php
  */
 
+/**
+ * Class Themeisle_OB_WP_Import_Logger
+ */
 class Themeisle_OB_WP_Import_Logger {
 
+	/**
+	 * Emojis mapped for each case.
+	 *
+	 * @var array
+	 */
+	private $icon_map = array(
+		'success'  => '✅',
+		'warning'  => '⚠️',
+		'progress' => '🔵',
+		'error'    => '🔴️',
+		'generic'  => '⚪️',
+	);
+
+	/**
+	 * Log file path.
+	 *
+	 * @var string
+	 */
 	private $log_file_path;
 
-	private $log_file_name = 'onboarding_log.txt';
+	/**
+	 * Log file name
+	 *
+	 * @var string
+	 */
+	private $log_file_name = 'onboarding_log.log';
 
-	private $log_entries = array();
+	/**
+	 * @var Themeisle_OB_WP_Import_Logger
+	 */
+	private static $_instance;
 
 	/**
 	 * Themeisle_OB_WP_Import_Logger constructor.
 	 */
 	public function __construct() {
+		if ( ! defined( 'TI_OB_DEBUG_LOG' ) ) {
+			define( 'TI_OB_DEBUG_LOG', false );
+		}
+
+		if ( TI_OB_DEBUG_LOG !== true ) {
+			return;
+		}
+
 		$this->set_log_path();
 		$this->clear_log();
-		add_action( 'shutdown', array( $this, 'write_log') );
 	}
 
-	public function __destruct() {
-		$this->write_log();
+	/**
+	 * Returns the instance of the class.
+	 *
+	 * @return Themeisle_OB_WP_Import_Logger
+	 */
+	public static function get_instance() {
+		if ( null === self::$_instance ) {
+			self::$_instance = new self();
+		}
+
+		return self::$_instance;
 	}
 
+	/**
+	 * Set the log path.
+	 */
 	private function set_log_path() {
 		$wp_upload_dir       = wp_upload_dir( null, false );
-		$this->log_file_path = $wp_upload_dir['basedir'] . '/neve-theme/';
+		$this->log_file_path = $wp_upload_dir['basedir'] . DIRECTORY_SEPARATOR;
 
 		if ( ! is_dir( $this->log_file_path ) ) {
 			wp_mkdir_p( $this->log_file_path );
 		}
 	}
 
+	/**
+	 * Clear the log file.
+	 */
 	private function clear_log() {
 		if ( is_writable( $this->log_file_path . $this->log_file_name ) ) {
 			unlink( $this->log_file_path . $this->log_file_name );
 		}
 	}
 
+	/**
+	 * Log entry.
+	 *
+	 * @param string $message log message.
+	 * @param string $type    log type.
+	 */
 	public function log( $message = 'No message provided.', $type = 'error' ) {
-		array_push( $this->log_entries, array(
-			'message'   => $message,
-			'type'      => $type,
-			'time'      => date( '[d/M/Y:H:i:s]' ),
-			'microtime' => microtime(),
-		) );
-	}
+		$log_entry = array(
+			'message' => $message,
+			'type'    => array_key_exists( $type, $this->icon_map ) ? $this->icon_map[ $type ] : $this->icon_map['generic'],
+			'time'    => date( '[d/M/Y:H:i:s]' ),
+		);
 
-	public function write_log() {
-		require_once ABSPATH . '/wp-admin/includes/file.php';
-		global $wp_filesystem;
-		WP_Filesystem();
-		$wp_filesystem->put_contents( $this->log_file_path . $this->log_file_name, $this->get_log(), 0644 );
+		file_put_contents( $this->log_file_path . $this->log_file_name, $this->get_log_entry( $log_entry ), FILE_APPEND );
 	}
 
 	/**
+	 * Get the formatted log entry.
+	 *
 	 * @return string
 	 */
-	private function get_log() {
-		ob_start();
-		foreach ( $this->log_entries as $log_entry ) {
-			echo trim( preg_replace( '/\s\s+/', ' ', "{$log_entry['time']} ({$log_entry['type']}): {$log_entry['message']}" ) ) . PHP_EOL;
-		}
-		$log = ob_get_clean();
-		ob_flush();
-
-		return $log;
+	private function get_log_entry( $log_entry ) {
+		return trim( preg_replace( '/\s\s+/', ' ', "{$log_entry['time']} ({$log_entry['type']}): {$log_entry['message']}" ) ) . PHP_EOL;
 	}
 }

@@ -77,6 +77,8 @@ class Themeisle_OB_WXR_Parser_SimpleXML {
 			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'wordpress-importer' ) );
 		$base_url = $xml->xpath('/rss/channel/wp:base_site_url');
 		$base_url = (string) trim( $base_url[0] );
+		$base_blog_url = $xml->xpath('/rss/channel/wp:base_blog_url');
+		$base_blog_url = (string) trim( $base_blog_url[0] );
 		$namespaces = $xml->getDocNamespaces();
 		if ( ! isset( $namespaces['wp'] ) )
 			$namespaces['wp'] = 'http://wordpress.org/export/1.1/';
@@ -218,13 +220,14 @@ class Themeisle_OB_WXR_Parser_SimpleXML {
 			$posts[] = $post;
 		}
 		return array(
-			'authors' => $authors,
-			'posts' => $posts,
-			'categories' => $categories,
-			'tags' => $tags,
-			'terms' => $terms,
-			'base_url' => $base_url,
-			'version' => $wxr_version
+			'authors'       => $authors,
+			'posts'         => $posts,
+			'categories'    => $categories,
+			'tags'          => $tags,
+			'terms'         => $terms,
+			'base_url'      => $base_url,
+			'base_blog_url' => $base_blog_url,
+			'version'       => $wxr_version
 		);
 	}
 }
@@ -265,13 +268,14 @@ class Themeisle_OB_WXR_Parser_XML {
 		if ( ! preg_match( '/^\d+\.\d+$/', $this->wxr_version ) )
 			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'wordpress-importer' ) );
 		return array(
-			'authors' => $this->authors,
-			'posts' => $this->posts,
-			'categories' => $this->category,
-			'tags' => $this->tag,
-			'terms' => $this->term,
-			'base_url' => $this->base_url,
-			'version' => $this->wxr_version
+			'authors'       => $this->authors,
+			'posts'         => $this->posts,
+			'categories'    => $this->category,
+			'tags'          => $this->tag,
+			'terms'         => $this->term,
+			'base_url'      => $this->base_url,
+			'base_blog_url' => $this->base_blog_url,
+			'version'       => $this->wxr_version
 		);
 	}
 	public function tag_open( $parse, $tag, $attr ) {
@@ -355,6 +359,9 @@ class Themeisle_OB_WXR_Parser_XML {
 			case 'wp:base_site_url':
 				$this->base_url = $this->cdata;
 				break;
+			case 'wp:base_blog_url':
+				$this->base_blog_url = $this->cdata;
+				break;
 			case 'wp:wxr_version':
 				$this->wxr_version = $this->cdata;
 				break;
@@ -380,6 +387,8 @@ class Themeisle_OB_WXR_Parser_Regex {
 	public $tags = array();
 	public $terms = array();
 	public $base_url = '';
+	public $base_blog_url = '';
+
 	public function __construct() {
 		$this->has_gzip = is_callable( 'gzopen' );
 	}
@@ -401,6 +410,11 @@ class Themeisle_OB_WXR_Parser_Regex {
 				if ( false !== strpos( $importline, '<wp:base_site_url>' ) ) {
 					preg_match( '|<wp:base_site_url>(.*?)</wp:base_site_url>|is', $importline, $url );
 					$this->base_url = $url[1];
+					continue;
+				}
+				if ( false !== strpos( $importline, '<wp:base_blog_url>' ) ) {
+					preg_match( '|<wp:base_blog_url>(.*?)</wp:base_blog_url>|is', $importline, $base_blog_url );
+					$this->base_blog_url = $base_blog_url[1];
 					continue;
 				}
 				if ( false !== strpos( $importline, '<wp:author>' ) ) {
@@ -433,14 +447,16 @@ class Themeisle_OB_WXR_Parser_Regex {
 		}
 		if ( ! $wxr_version )
 			return new WP_Error( 'WXR_parse_error', __( 'This does not appear to be a WXR file, missing/invalid WXR version number', 'wordpress-importer' ) );
+
 		return array(
-			'authors' => $this->authors,
-			'posts' => $this->posts,
-			'categories' => $this->categories,
-			'tags' => $this->tags,
-			'terms' => $this->terms,
-			'base_url' => $this->base_url,
-			'version' => $wxr_version
+			'authors'       => $this->authors,
+			'posts'         => $this->posts,
+			'categories'    => $this->categories,
+			'tags'          => $this->tags,
+			'terms'         => $this->terms,
+			'base_url'      => $this->base_url,
+			'base_blog_url' => $this->base_blog_url,
+			'version'       => $wxr_version
 		);
 	}
 	public function get_tag( $string, $tag ) {

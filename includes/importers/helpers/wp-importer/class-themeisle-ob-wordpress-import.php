@@ -1,5 +1,7 @@
 <?php
-define( 'IMPORT_DEBUG', false );
+/**
+ * WordPress WXR Importer.
+ */
 
 $loadables = array(
 	'import'   => ABSPATH . 'wp-admin/includes/import.php',
@@ -45,6 +47,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	public $categories = array();
 	public $tags = array();
 	public $base_url = '';
+	public $base_blog_url = '';
 	// mappings from old information to new
 	public $processed_posts = array();
 	public $processed_terms = array();
@@ -83,9 +86,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	 * Logger initialized.
 	 */
 	private function set_logger() {
-		require_once 'class-themeisle-ob-import-logger.php';
-		$this->logger = new Themeisle_OB_WP_Import_Logger();
-		$this->logger->log( 'Logger initalized.', 'success' );
+		$this->logger = Themeisle_OB_WP_Import_Logger::get_instance();
 	}
 
 	/**
@@ -96,18 +97,21 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	private function import_start( $file ) {
 		$this->logger->log( 'Import started.', 'success' );
 		if ( ! is_file( $file ) ) {
+			$this->logger->log( 'No file to import.' );
 			die();
 		}
 		$import_data = $this->parse( $file );
 		if ( is_wp_error( $import_data ) ) {
+			$this->logger->log( 'Error parsing WXR file.' );
 			die();
 		}
-		$this->version    = $import_data['version'];
-		$this->posts      = $import_data['posts'];
-		$this->terms      = $import_data['terms'];
-		$this->categories = $import_data['categories'];
-		$this->tags       = $import_data['tags'];
-		$this->base_url   = esc_url( $import_data['base_url'] );
+		$this->version       = $import_data['version'];
+		$this->posts         = $import_data['posts'];
+		$this->terms         = $import_data['terms'];
+		$this->categories    = $import_data['categories'];
+		$this->tags          = $import_data['tags'];
+		$this->base_url      = esc_url( $import_data['base_url'] );
+		$this->base_blog_url = esc_url( $import_data['base_blog_url'] );
 		wp_defer_term_counting( true );
 		wp_defer_comment_counting( true );
 		do_action( 'import_start' );
@@ -163,7 +167,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 				'category_nicename'    => $cat['category_nicename'],
 				'category_parent'      => $category_parent,
 				'cat_name'             => $cat['cat_name'],
-				'category_description' => $category_description
+				'category_description' => $category_description,
 			);
 			$catarr               = wp_slash( $catarr );
 			$id                   = wp_insert_category( $catarr );
@@ -206,18 +210,18 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			}
 			$tag      = wp_slash( $tag );
 			$tag_desc = isset( $tag['tag_description'] ) ? $tag['tag_description'] : '';
-			$tagarr   = array( 'slug' => $tag['tag_slug'], 'description' => $tag_desc );
+			$tagarr   = array(
+				'slug'        => $tag['tag_slug'],
+				'description' => $tag_desc,
+			);
 			$id       = wp_insert_term( $tag['tag_name'], 'post_tag', $tagarr );
 			if ( ! is_wp_error( $id ) ) {
 				if ( isset( $tag['term_id'] ) ) {
 					$this->processed_terms[ intval( $tag['term_id'] ) ] = $id['term_id'];
 				}
 			} else {
-				printf( __( 'Failed to import post tag %s', 'wordpress-importer' ), esc_html( $tag['tag_name'] ) );
-				if ( defined( 'IMPORT_DEBUG' ) && IMPORT_DEBUG ) {
-					echo ': ' . $id->get_error_message();
-				}
-				echo '<br />';
+				$this->logger->log( "Failed to import post tag {$tag['tag_name']}" );
+				$this->logger->log( $id->get_error_message() );
 				continue;
 			}
 			$this->process_termmeta( $tag, $id['term_id'] );
@@ -262,7 +266,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			$termarr     = array(
 				'slug'        => $term['slug'],
 				'description' => $description,
-				'parent'      => intval( $parent )
+				'parent'      => intval( $parent ),
 			);
 			$id          = wp_insert_term( $term['term_name'], $term['term_taxonomy'], $termarr );
 			if ( ! is_wp_error( $id ) ) {
@@ -270,11 +274,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 					$this->processed_terms[ intval( $term['term_id'] ) ] = $id['term_id'];
 				}
 			} else {
-				printf( __( 'Failed to import %s %s', 'wordpress-importer' ), esc_html( $term['term_taxonomy'] ), esc_html( $term['term_name'] ) );
-				if ( defined( 'IMPORT_DEBUG' ) && IMPORT_DEBUG ) {
-					echo ': ' . $id->get_error_message();
-				}
-				echo '<br />';
+				$this->logger->log( "Failed to import {$term['term_taxonomy']} {$term['term_name']}", 'warning' );
+				$this->logger->log( $id->get_error_message() );
 				continue;
 			}
 			$this->process_termmeta( $term, $id['term_id'] );
@@ -349,10 +350,11 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	private function process_posts() {
 		$this->logger->log( 'Processing posts...', 'progress' );
 		$this->posts = apply_filters( 'wp_import_posts', $this->posts );
+		$this->logger->log( 'Done filtering posts', 'success' );
 		foreach ( $this->posts as $post ) {
 			$post = apply_filters( 'wp_import_post_data_raw', $post );
 			if ( ! post_type_exists( $post['post_type'] ) ) {
-				$this->logger->log( "Failed to import {$post['post_title']}. Invalid post type {$post['post_type']}", 'error' );
+				$this->logger->log( "Failed to import {$post['post_title']}. Invalid post type {$post['post_type']}" );
 				do_action( 'wp_import_post_exists', $post );
 				continue;
 			}
@@ -383,7 +385,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			$post_exists = apply_filters( 'wp_import_existing_post', $post_exists, $post );
 			if ( $post_exists && get_post_type( $post_exists ) == $post['post_type'] ) {
 				$this->logger->log( $post_type_object->labels->singular_name . ' ' . esc_html( $post['post_title'] ) . ' already exists.', 'success' );
-				$comment_post_ID                                     = $post_id = $post_exists;
+				$comment_post_id                                     = $post_id = $post_exists;
 				$this->processed_posts[ intval( $post['post_id'] ) ] = intval( $post_exists );
 			} else {
 				$post_parent = (int) $post['post_parent'];
@@ -414,9 +416,9 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 					'post_parent'    => $post_parent,
 					'menu_order'     => $post['menu_order'],
 					'post_type'      => $post['post_type'],
-					'post_password'  => $post['post_password']
+					'post_password'  => $post['post_password'],
 				);
-				$original_post_ID = $post['post_id'];
+				$original_post_id = $post['post_id'];
 				$postdata         = apply_filters( 'wp_import_post_data_processed', $postdata, $post );
 				$postdata         = wp_slash( $postdata );
 				if ( 'attachment' == $postdata['post_type'] ) {
@@ -434,12 +436,12 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 							}
 						}
 					}
-					$comment_post_ID = $post_id = $this->process_attachment( $postdata, $remote_url );
+					$comment_post_id = $post_id = $this->process_attachment( $postdata, $remote_url );
 				} else {
-					$this->logger->log( "Inserting post: {$postdata['post_title']}.", 'progress' );
-					$comment_post_ID = $post_id = wp_insert_post( $postdata, true );
-					$this->logger->log( "Done inserting post: {$postdata['post_title']}.", 'success' );
-					do_action( 'wp_import_insert_post', $post_id, $original_post_ID, $postdata, $post );
+					$this->logger->log( "Inserting {$postdata['post_type']}: {$postdata['post_title']}.", 'progress' );
+					$comment_post_id = $post_id = wp_insert_post( $postdata, true );
+					$this->logger->log( "Done inserting {$postdata['post_type']}: {$postdata['post_title']}.", 'success' );
+					do_action( 'wp_import_insert_post', $post_id, $original_post_id, $postdata, $post );
 				}
 				if ( is_wp_error( $post_id ) ) {
 					$this->logger->log( "Failed to import {$post_type_object->labels->singular_name} {$post['post_title']}. \n {$post_id->get_error_message()}" );
@@ -469,11 +471,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 							$term_id = $t['term_id'];
 							do_action( 'wp_import_insert_term', $t, $term, $post_id, $post );
 						} else {
-							printf( __( 'Failed to import %s %s', 'wordpress-importer' ), esc_html( $taxonomy ), esc_html( $term['name'] ) );
-							if ( defined( 'IMPORT_DEBUG' ) && IMPORT_DEBUG ) {
-								echo ': ' . $t->get_error_message();
-							}
-							echo '<br />';
+							$this->logger->log( "Failed to import {$taxonomy} {$term['name']}", 'success' );
+							$this->logger->log( $t->get_error_message() );
 							do_action( 'wp_import_insert_term_failed', $t, $term, $post_id, $post );
 							continue;
 						}
@@ -574,9 +573,9 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		}
 		if ( 'taxonomy' == $_menu_item_type && isset( $this->processed_terms[ intval( $_menu_item_object_id ) ] ) ) {
 			$_menu_item_object_id = $this->processed_terms[ intval( $_menu_item_object_id ) ];
-		} else if ( 'post_type' == $_menu_item_type && isset( $this->processed_posts[ intval( $_menu_item_object_id ) ] ) ) {
+		} elseif ( 'post_type' == $_menu_item_type && isset( $this->processed_posts[ intval( $_menu_item_object_id ) ] ) ) {
 			$_menu_item_object_id = $this->processed_posts[ intval( $_menu_item_object_id ) ];
-		} else if ( 'custom' != $_menu_item_type ) {
+		} elseif ( 'custom' != $_menu_item_type ) {
 			// associated object is missing or not imported yet, we'll retry later
 			$this->missing_menu_items[] = $item;
 
@@ -584,7 +583,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		}
 		if ( isset( $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ] ) ) {
 			$_menu_item_menu_item_parent = $this->processed_menu_items[ intval( $_menu_item_menu_item_parent ) ];
-		} else if ( $_menu_item_menu_item_parent ) {
+		} elseif ( $_menu_item_menu_item_parent ) {
 			$this->menu_item_orphans[ intval( $item['post_id'] ) ] = (int) $_menu_item_menu_item_parent;
 			$_menu_item_menu_item_parent                           = 0;
 		}
@@ -606,9 +605,9 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			'menu-item-target'      => $_menu_item_target,
 			'menu-item-classes'     => $_menu_item_classes,
 			'menu-item-xfn'         => $_menu_item_xfn,
-			'menu-item-status'      => $item['status']
+			'menu-item-status'      => $item['status'],
 		);
-		$id   = wp_update_nav_menu_item( $menu_id, 0, $args );
+		$id   = wp_update_nav_menu_item( $menu_id, 0, apply_filters( 'wp_import_nav_menu_item_args', $args, $this->base_blog_url ) );
 		if ( $id && ! is_wp_error( $id ) ) {
 			$this->processed_menu_items[ intval( $item['post_id'] ) ] = (int) $id;
 		}
@@ -641,8 +640,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		if ( $info = wp_check_filetype( $upload['file'] ) ) {
 			$post['post_mime_type'] = $info['type'];
 		} else {
-			$error = new WP_Error( 'attachment_processing_error', __( 'Invalid file type', 'wordpress-importer' ) );
-			$this->logger->log( $error );
+			$error = new WP_Error( 'attachment_processing_error', 'Invalid file type' );
+			$this->logger->log( $error->get_error_message() );
 
 			return $error;
 		}
@@ -683,43 +682,52 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			return new WP_Error( 'upload_dir_error', $upload['error'] );
 		}
 		// fetch the remote url and write it to the placeholder file
-		$remote_response = wp_safe_remote_get( $url, array(
-			'timeout'  => 300,
-			'stream'   => true,
-			'filename' => $upload['file'],
-		) );
+		$remote_response = wp_safe_remote_get(
+			$url,
+			array(
+				'timeout'  => 300,
+				'stream'   => true,
+				'filename' => $upload['file'],
+			)
+		);
 		$headers         = wp_remote_retrieve_headers( $remote_response );
 		// request failed
 		if ( ! $headers ) {
 			@unlink( $upload['file'] );
+			$error = new WP_Error( 'import_file_error', 'Remote server did not respond' );
+			$this->logger->log( $error->get_error_message() );
 
-			return new WP_Error( 'import_file_error', __( 'Remote server did not respond', 'wordpress-importer' ) );
+			return $error;
 		}
 		$remote_response_code = wp_remote_retrieve_response_code( $remote_response );
 		// make sure the fetch was successful
 		if ( $remote_response_code != '200' ) {
 			@unlink( $upload['file'] );
+			$error = new WP_Error( 'import_file_error', sprintf( 'Remote server returned error response %1$d %2$s', esc_html( $remote_response_code ), get_status_header_desc( $remote_response_code ) ) );
+			$this->logger->log( $error->get_error_message() );
 
-			return new WP_Error( 'import_file_error', sprintf( __( 'Remote server returned error response %1$d %2$s', 'wordpress-importer' ), esc_html( $remote_response_code ), get_status_header_desc( $remote_response_code ) ) );
+			return $error;
 		}
 		$filesize = filesize( $upload['file'] );
 		if ( isset( $headers['content-length'] ) && $filesize != $headers['content-length'] ) {
 			@unlink( $upload['file'] );
+			$error = new WP_Error( 'import_file_error', 'Remote file is incorrect size' );
+			$this->logger->log( $error->get_error_message() );
 
-			return new WP_Error( 'import_file_error', __( 'Remote file is incorrect size', 'wordpress-importer' ) );
+			return $error;
 		}
 		if ( 0 == $filesize ) {
 			@unlink( $upload['file'] );
-			$error = new WP_Error( 'import_file_error', __( 'Zero size file downloaded', 'wordpress-importer' ) );;
-			$this->logger->log( $error );
+			$error = new WP_Error( 'import_file_error', 'Zero size file downloaded' );
+			$this->logger->log( $error->get_error_message() );
 
 			return $error;
 		}
 		$max_size = (int) $this->max_attachment_size();
 		if ( ! empty( $max_size ) && $filesize > $max_size ) {
 			@unlink( $upload['file'] );
-			$error = new WP_Error( 'import_file_error', sprintf( __( 'Remote file is too large, limit is %s', 'wordpress-importer' ), size_format( $max_size ) ) );
-			$this->logger->log( $error );
+			$error = new WP_Error( 'import_file_error', sprintf( 'Remote file is too large, limit is %s', size_format( $max_size ) ) );
+			$this->logger->log( $error->get_error_message() );
 
 			return $error;
 		}
@@ -731,7 +739,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			$this->url_remap[ $headers['x-final-location'] ] = $upload['url'];
 		}
 
-		$this->logger->log( "Fetched remote attachment.", 'success' );
+		$this->logger->log( 'Fetched remote attachment.', 'success' );
 
 		return $upload;
 	}
