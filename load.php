@@ -29,5 +29,5 @@ if ( ! class_exists( 'Themeisle_Onboarding' ) ) {
 }
 
 if ( ! class_exists( 'Themeisle_OB_WP_Import_Logger' ) ) {
-	require_once dirname(__FILE__) . '/includes/importers/helpers/wp-importer/class-themeisle-ob-import-logger.php';
+	require_once dirname( __FILE__ ) . '/includes/importers/helpers/wp-importer/class-themeisle-ob-import-logger.php';
 }

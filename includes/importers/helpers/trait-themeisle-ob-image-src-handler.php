@@ -47,6 +47,11 @@ trait Themeisle_OB_Image_Src_Handler {
 	 */
 	private function get_urls_to_replace( $markup ) {
 		$regex = '/(?:http(?:s?):)(?:[\/\\\\\\\\|.|\w|\s|-])*\.(?:' . implode( '|', array_keys( $this->extensions ) ) . ')/m';
+
+		if ( ! is_string( $markup ) ) {
+			return $markup;
+		}
+
 		preg_match_all( $regex, $markup, $urls );
 
 		$urls = array_map(

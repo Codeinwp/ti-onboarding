@@ -42,22 +42,22 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	public $id; // WXR attachment ID
 	// information to import from WXR file
 	public $version;
-	public $posts = array();
-	public $terms = array();
-	public $categories = array();
-	public $tags = array();
-	public $base_url = '';
+	public $posts         = array();
+	public $terms         = array();
+	public $categories    = array();
+	public $tags          = array();
+	public $base_url      = '';
 	public $base_blog_url = '';
 	// mappings from old information to new
-	public $processed_posts = array();
-	public $processed_terms = array();
-	public $post_orphans = array();
+	public $processed_posts      = array();
+	public $processed_terms      = array();
+	public $post_orphans         = array();
 	public $processed_menu_items = array();
-	public $menu_item_orphans = array();
-	public $missing_menu_items = array();
-	public $fetch_attachments = true;
-	public $url_remap = array();
-	public $featured_images = array();
+	public $menu_item_orphans    = array();
+	public $missing_menu_items   = array();
+	public $fetch_attachments    = true;
+	public $url_remap            = array();
+	public $featured_images      = array();
 
 	/**
 	 * The main controller for the actual import stage.
@@ -145,7 +145,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		$this->logger->log( 'Processing categories...', 'progress' );
 		$this->categories = apply_filters( 'wp_import_categories', $this->categories );
 		if ( empty( $this->categories ) ) {
-			$this->logger->log( 'No categories to import', 'warning' );
+			$this->logger->log( 'No categories to process.', 'warning' );
 
 			return;
 		}
@@ -194,6 +194,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		$this->logger->log( 'Processing tags...', 'progress' );
 		$this->tags = apply_filters( 'wp_import_tags', $this->tags );
 		if ( empty( $this->tags ) ) {
+			$this->logger->log( 'No tags to process.', 'success' );
+
 			return;
 		}
 		foreach ( $this->tags as $tag ) {
@@ -226,8 +228,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			}
 			$this->process_termmeta( $tag, $id['term_id'] );
 		}
-		unset( $this->tags );
 		$this->logger->log( 'Processed tags.', 'success' );
+		unset( $this->tags );
 	}
 
 	/**
@@ -239,6 +241,8 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		$this->logger->log( 'Processing terms...', 'progress' );
 		$this->terms = apply_filters( 'wp_import_terms', $this->terms );
 		if ( empty( $this->terms ) ) {
+			$this->logger->log( 'No terms to process.', 'success' );
+
 			return;
 		}
 		foreach ( $this->terms as $term ) {
@@ -350,7 +354,6 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	private function process_posts() {
 		$this->logger->log( 'Processing posts...', 'progress' );
 		$this->posts = apply_filters( 'wp_import_posts', $this->posts );
-		$this->logger->log( 'Done filtering posts', 'success' );
 		foreach ( $this->posts as $post ) {
 			$post = apply_filters( 'wp_import_post_data_raw', $post );
 			if ( ! post_type_exists( $post['post_type'] ) ) {
@@ -510,7 +513,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 						if ( $key === '_elementor_data' ) {
 							$this->logger->log( 'Filtering elementor meta...', 'progress' );
 							require_once 'class-themeisle-ob-elementor-meta-handler.php';
-							$meta_handler = new Themeisle_OB_Elementor_Meta_Handler( $value, $this->full_url );
+							$meta_handler = new Themeisle_OB_Elementor_Meta_Handler( $value, $this->base_blog_url );
 							$meta_handler->filter_meta();
 							$this->logger->log( 'Filtered elementor meta.', 'success' );
 						}
@@ -592,7 +595,7 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		if ( is_array( $_menu_item_classes ) ) {
 			$_menu_item_classes = implode( ' ', $_menu_item_classes );
 		}
-		$args = array(
+		$args     = array(
 			'menu-item-object-id'   => $_menu_item_object_id,
 			'menu-item-object'      => $_menu_item_object,
 			'menu-item-parent-id'   => $_menu_item_menu_item_parent,
@@ -607,7 +610,17 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 			'menu-item-xfn'         => $_menu_item_xfn,
 			'menu-item-status'      => $item['status'],
 		);
-		$id   = wp_update_nav_menu_item( $menu_id, 0, apply_filters( 'wp_import_nav_menu_item_args', $args, $this->base_blog_url ) );
+		$args     = apply_filters( 'wp_import_nav_menu_item_args', $args, $this->base_blog_url );
+		$existing = wp_get_nav_menu_items( $menu_id );
+		foreach ( $existing as $existing_item ) {
+			if ( $args['menu-item-url'] === $existing_item->url ) {
+				$this->logger->log( 'Menu item already exists.', 'success' );
+
+				return;
+			}
+		}
+
+		$id = wp_update_nav_menu_item( $menu_id, 0, $args );
 		if ( $id && ! is_wp_error( $id ) ) {
 			$this->processed_menu_items[ intval( $item['post_id'] ) ] = (int) $id;
 		}
@@ -653,10 +666,10 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		wp_update_attachment_metadata( $post_id, wp_generate_attachment_metadata( $post_id, $upload['file'] ) );
 		// remap resized image URLs, works by stripping the extension and remapping the URL stub.
 		if ( preg_match( '!^image/!', $info['type'] ) ) {
-			$parts                                              = pathinfo( $url );
-			$name                                               = basename( $parts['basename'], ".{$parts['extension']}" ); // PATHINFO_FILENAME in PHP 5.2
-			$parts_new                                          = pathinfo( $upload['url'] );
-			$name_new                                           = basename( $parts_new['basename'], ".{$parts_new['extension']}" );
+			$parts     = pathinfo( $url );
+			$name      = basename( $parts['basename'], ".{$parts['extension']}" ); // PATHINFO_FILENAME in PHP 5.2
+			$parts_new = pathinfo( $upload['url'] );
+			$name_new  = basename( $parts_new['basename'], ".{$parts_new['extension']}" );
 			$this->url_remap[ $parts['dirname'] . '/' . $name ] = $parts_new['dirname'] . '/' . $name_new;
 		}
 		$this->logger->log( 'Processed attachment.', 'success' );

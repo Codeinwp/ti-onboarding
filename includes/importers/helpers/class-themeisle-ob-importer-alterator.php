@@ -59,6 +59,7 @@ class Themeisle_OB_Importer_Alterator {
 	 * Change nav menu items link if needed.
 	 *
 	 * @param array $args menu item args.
+	 * @param string $import_source_url the source url.
 	 *
 	 * @return array
 	 */

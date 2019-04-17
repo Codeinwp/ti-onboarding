@@ -124,6 +124,7 @@ class Themeisle_OB_Content_Importer {
 		do_action( 'themeisle_ob_after_shop_pages_setup' );
 
 		if ( empty( $frontpage_id ) ) {
+
 			return new WP_REST_Response(
 				array(
 					'data'    => 'ti__ob_front_page_id_err_1',
@@ -166,7 +167,7 @@ class Themeisle_OB_Content_Importer {
 	 *
 	 * @param array $args the front page array.
 	 *
-	 * @return int|void
+	 * @return int
 	 */
 	private function setup_front_page( $args ) {
 		if ( ! is_array( $args ) ) {
@@ -239,7 +240,6 @@ class Themeisle_OB_Content_Importer {
 					),
 				)
 			);
-			// print_r( 'Busted Elementor Cache.' . "\n", false );
 		}
 	}
 
@@ -253,7 +253,7 @@ class Themeisle_OB_Content_Importer {
 	 */
 	private function import_file( $file_path, $req_body = array() ) {
 		if ( empty( $file_path ) || ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
-			return new WP_Error( 'ti__ob_content_err_1' );
+			return new WP_Error( 'ti__ob_content_err_1', 'No content file' );
 		}
 
 		require_once 'helpers/class-themeisle-ob-importer-alterator.php';
