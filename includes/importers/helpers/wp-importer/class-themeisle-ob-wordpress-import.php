@@ -3,18 +3,6 @@
  * WordPress WXR Importer.
  */
 
-$loadables = array(
-	'import'   => ABSPATH . 'wp-admin/includes/import.php',
-	'post'     => ABSPATH . 'wp-admin/includes/post.php',
-	'taxonomy' => ABSPATH . 'wp-admin/includes/taxonomy.php',
-);
-
-foreach ( $loadables as $loadable ) {
-	if ( file_exists( $loadable ) && is_readable( $loadable ) ) {
-		require $loadable;
-	}
-}
-
 if ( ! class_exists( 'WP_Importer' ) ) {
 	$class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
 	if ( file_exists( $class_wp_importer ) && is_readable( $class_wp_importer ) ) {
@@ -58,6 +46,16 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	public $fetch_attachments    = true;
 	public $url_remap            = array();
 	public $featured_images      = array();
+
+	/**
+	 * Themeisle_OB_WP_Import constructor.
+	 */
+	public function __construct() {
+		require_once ABSPATH . 'wp-admin/includes/import.php';
+		require_once ABSPATH . 'wp-admin/includes/post.php';
+		require_once ABSPATH . 'wp-admin/includes/taxonomy.php';
+	}
+
 
 	/**
 	 * The main controller for the actual import stage.
