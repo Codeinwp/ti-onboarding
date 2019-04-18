@@ -1,3 +1,11 @@
+## [1.3.4](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.3...v1.3.4) (2019-04-11)
+
+
+### Bug Fixes
+
+* zelle import ([22a1799](https://github.com/Codeinwp/ti-onboarding/commit/22a1799))
+* zelle import ([65f8aa9](https://github.com/Codeinwp/ti-onboarding/commit/65f8aa9))
+
 ## [1.3.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.2...v1.3.3) (2019-04-09)
 
 
