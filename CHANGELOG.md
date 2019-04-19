@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.4...v1.3.5) (2019-04-19)
+
+
+### Bug Fixes
+
+* require statements ([a498731](https://github.com/Codeinwp/ti-onboarding/commit/a498731))
+
 ## [1.3.4](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.3...v1.3.4) (2019-04-11)
 
 
