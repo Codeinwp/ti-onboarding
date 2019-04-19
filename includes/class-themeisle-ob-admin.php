@@ -156,6 +156,7 @@ class Themeisle_OB_Admin {
 			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
 			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
 			'importSteps'     => $this->get_import_steps(),
+			'logUrl'          => Themeisle_OB_WP_Import_Logger::get_instance()->get_log_url(),
 		);
 
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
@@ -196,6 +197,7 @@ class Themeisle_OB_Admin {
 			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
 			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
 			'copy_error_code'         => __( 'Copy error code', 'textdomain' ),
+			'download_error_log'      => __( 'Download error log', 'textdomain' ),
 			'error_report'            => sprintf(
 				__( 'Hi! It seems there is a configuration issue with your server that\'s causing the import to fail. Please %1$s with us with the error code below, so we can help you fix this.', 'textdomain' ),
 				sprintf( '<a href="https://themeisle.com/contact">%1$s <i class="dashicons dashicons-external"></i></a>', __( 'get in touch', 'textdomain' ) )
