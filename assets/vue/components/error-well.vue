@@ -4,7 +4,7 @@
 			<p v-html="strings.error_report"></p>
 		</div>
 		<div class="buttons">
-			<form method="get" :action="logoUrl">
+			<form method="get" :action="logUrl">
 				<button class="button button-primary" type="submit">
 					<i class="dashicons dashicons-download"></i>
 					{{strings.download_error_log}}
@@ -29,7 +29,7 @@
       strings () {
         return this.$store.state.strings;
       },
-      logoUrl () {
+      logUrl () {
         return themeisleSitesLibApi.logUrl;
       }
     },

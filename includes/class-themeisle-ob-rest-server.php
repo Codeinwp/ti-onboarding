@@ -70,7 +70,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return bool
 	 */
 	private function is_valid_lic() {
-		return true;
 		if ( ! class_exists( '\ThemeisleSDK\Common\Module_Factory' ) ) {
 			return false;
 		}
