@@ -124,6 +124,7 @@ class Themeisle_OB_Content_Importer {
 		do_action( 'themeisle_ob_after_shop_pages_setup' );
 
 		if ( empty( $frontpage_id ) ) {
+			$this->logger->log( 'No front page ID.' );
 
 			return new WP_REST_Response(
 				array(
@@ -211,9 +212,13 @@ class Themeisle_OB_Content_Importer {
 	private function setup_shop_pages( $pages ) {
 		$this->logger->log( 'Setting up shop page.', 'progress' );
 		if ( ! class_exists( 'WooCommerce' ) ) {
+			$this->logger->log( 'No WooCommerce.', 'success' );
+
 			return;
 		}
 		if ( ! is_array( $pages ) ) {
+			$this->logger->log( 'No Shop Pages.', 'success' );
+
 			return;
 		}
 		foreach ( $pages as $option_id => $slug ) {
