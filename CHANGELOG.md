@@ -1,3 +1,11 @@
+## [1.3.6](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.5...v1.3.6) (2019-04-22)
+
+
+### Bug Fixes
+
+* theme check issues ([cf7bfa3](https://github.com/Codeinwp/ti-onboarding/commit/cf7bfa3))
+* theme check issues ([3d5a425](https://github.com/Codeinwp/ti-onboarding/commit/3d5a425))
+
 ## [1.3.5](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.4...v1.3.5) (2019-04-19)
 
 
