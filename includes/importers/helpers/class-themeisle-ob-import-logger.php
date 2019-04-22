@@ -179,7 +179,7 @@ class Themeisle_OB_WP_Import_Logger {
 	 * @param string $type    log type.
 	 */
 	public function log( $message = 'No message provided.', $type = 'error' ) {
-		$log_entry        = array(
+		$log_entry         = array(
 			'message' => $message,
 			'type'    => array_key_exists( $type, $this->icon_map ) ? $this->icon_map[ $type ] : $this->icon_map['generic'],
 			'time'    => date( '[d/M/Y:H:i:s]' ),
@@ -194,7 +194,7 @@ class Themeisle_OB_WP_Import_Logger {
 		$log_file = $this->log_file_path . $this->log_file_name;
 		global $wp_filesystem;
 		WP_Filesystem();
-		$content = file_exists( $log_file ) ? $wp_filesystem->get_contents( $log_file ) : '';
+		$content  = file_exists( $log_file ) ? $wp_filesystem->get_contents( $log_file ) : '';
 		$content .= $this->log_string;
 		$wp_filesystem->put_contents( $log_file, $content, 0644 );
 	}

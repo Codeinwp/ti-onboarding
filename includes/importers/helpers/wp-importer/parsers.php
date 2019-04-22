@@ -272,7 +272,7 @@ class Themeisle_OB_WXR_Parser_SimpleXML {
  * WXR Parser that makes use of the XML Parser PHP extension.
  */
 class Themeisle_OB_WXR_Parser_XML {
-	public $wp_tags = array(
+	public $wp_tags     = array(
 		'wp:post_id',
 		'wp:post_date',
 		'wp:post_date_gmt',
