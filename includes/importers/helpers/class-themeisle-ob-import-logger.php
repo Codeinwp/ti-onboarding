@@ -46,6 +46,11 @@ class Themeisle_OB_WP_Import_Logger {
 	private $log_file_name = 'ti_theme_onboarding.log';
 
 	/**
+	 * @var string
+	 */
+	private $log_string = '';
+
+	/**
 	 * @var Themeisle_OB_WP_Import_Logger
 	 */
 	private static $_instance;
@@ -61,6 +66,8 @@ class Themeisle_OB_WP_Import_Logger {
 		if ( TI_OB_DEBUG_LOG !== true ) {
 			return;
 		}
+		require_once( ABSPATH . 'wp-admin/includes/file.php' ); // you have to load this file
+		add_action( 'shutdown', array( $this, 'log_to_file' ) );
 		$this->set_log_path();
 		$this->clear_log();
 		$this->log_client_info();
@@ -86,8 +93,8 @@ class Themeisle_OB_WP_Import_Logger {
 	 */
 	private function log_client_info() {
 		$this->log_info( "WordPress Instance Info:\n" );
-		$this->log_info( 'Home URL', get_option( 'home' ) );
-		$this->log_info( 'Site URL', get_option( 'siteurl' ) );
+		$this->log_info( 'Home URL', home_url() );
+		$this->log_info( 'Site URL', site_url() );
 		$this->log_info( 'WordPress Version', get_bloginfo( 'version' ) );
 		$this->log_info( 'Onboarding Version', Themeisle_Onboarding::VERSION );
 		$this->log_info( 'Multisite', is_multisite() ? 'Yes' : 'No' );
@@ -160,6 +167,9 @@ class Themeisle_OB_WP_Import_Logger {
 		if ( is_writable( $this->log_file_path . $this->log_file_name ) ) {
 			unlink( $this->log_file_path . $this->log_file_name );
 		}
+		global $wp_filesystem;
+		WP_Filesystem();
+		$wp_filesystem->put_contents( $this->log_file_path . $this->log_file_name, '', 0644 );
 	}
 
 	/**
@@ -169,13 +179,24 @@ class Themeisle_OB_WP_Import_Logger {
 	 * @param string $type    log type.
 	 */
 	public function log( $message = 'No message provided.', $type = 'error' ) {
-		$log_entry = array(
+		$log_entry         = array(
 			'message' => $message,
 			'type'    => array_key_exists( $type, $this->icon_map ) ? $this->icon_map[ $type ] : $this->icon_map['generic'],
 			'time'    => date( '[d/M/Y:H:i:s]' ),
 		);
+		$this->log_string .= $this->get_log_entry( $log_entry );
+	}
 
-		file_put_contents( $this->log_file_path . $this->log_file_name, $this->get_log_entry( $log_entry ), FILE_APPEND );
+	/**
+	 * Log to file.
+	 */
+	public function log_to_file() {
+		$log_file = $this->log_file_path . $this->log_file_name;
+		global $wp_filesystem;
+		WP_Filesystem();
+		$content  = file_exists( $log_file ) ? $wp_filesystem->get_contents( $log_file ) : '';
+		$content .= $this->log_string;
+		$wp_filesystem->put_contents( $log_file, $content, 0644 );
 	}
 
 	/**
@@ -190,7 +211,6 @@ class Themeisle_OB_WP_Import_Logger {
 
 		return trim( preg_replace( '/\s\s+/', ' ', "{$log_entry['time']} ({$log_entry['type']}): {$log_entry['message']}" ) ) . PHP_EOL;
 	}
-
 
 	/**
 	 * Get the log URL.
