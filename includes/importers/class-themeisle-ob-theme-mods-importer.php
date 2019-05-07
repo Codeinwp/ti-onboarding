@@ -101,7 +101,7 @@ class Themeisle_OB_Theme_Mods_Importer {
 			set_theme_mod( $mod, $value );
 		}
 
-		$this->options = $data['wp_options'];
+		$this->options = isset( $data['wp_options'] ) ? $data['wp_options'] : array();
 		foreach ( $this->options as $key => $value ) {
 			if ( $value === 'true' ) {
 				$value = true;
