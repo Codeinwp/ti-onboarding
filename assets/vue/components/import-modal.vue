@@ -196,7 +196,8 @@
           },
           themeMods: {
             'theme_mods': this.siteData.theme_mods,
-            'source_url': this.siteData.demo_url
+            'source_url': this.siteData.demo_url,
+			'wp_options': this.siteData.wp_options
           },
           widgets: this.siteData.widgets,
           source: this.siteData.source
