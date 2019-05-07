@@ -194,7 +194,7 @@ class Themeisle_OB_Admin {
 			'widgets'                 => __( 'Widgets', 'textdomain' ),
 			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
 			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
-			'unsplash_gallery_link'   => __( 'The original images gallery.', 'textdomain' ),
+			'unsplash_gallery_link'   => __( 'Here is our own collection of related images you can use for your site.', 'textdomain' ),
 			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
 			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
 			'copy_error_code'         => __( 'Copy error code', 'textdomain' ),
