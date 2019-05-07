@@ -1,3 +1,17 @@
+# [1.4.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.6...v1.4.0) (2019-05-07)
+
+
+### Bug Fixes
+
+* [#329](https://github.com/Codeinwp/ti-onboarding/issues/329) zelle import ([e2b978d](https://github.com/Codeinwp/ti-onboarding/commit/e2b978d))
+* [#329](https://github.com/Codeinwp/ti-onboarding/issues/329) zelle import ([a482b77](https://github.com/Codeinwp/ti-onboarding/commit/a482b77))
+* phpcbf ([dfc04ee](https://github.com/Codeinwp/ti-onboarding/commit/dfc04ee))
+
+
+### Features
+
+* allow wp options importing ([56369ef](https://github.com/Codeinwp/ti-onboarding/commit/56369ef))
+
 ## [1.3.6](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.5...v1.3.6) (2019-04-22)
 
 
