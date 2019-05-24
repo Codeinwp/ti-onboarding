@@ -1,3 +1,11 @@
+## [1.4.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.0...v1.4.1) (2019-05-24)
+
+
+### Bug Fixes
+
+* add option for plugins import ([793b063](https://github.com/Codeinwp/ti-onboarding/commit/793b063))
+* disable otter redirect [Codeinwp/neve[#539](https://github.com/Codeinwp/ti-onboarding/issues/539)] ([8898bd0](https://github.com/Codeinwp/ti-onboarding/commit/8898bd0))
+
 # [1.4.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.6...v1.4.0) (2019-05-07)
 
 
