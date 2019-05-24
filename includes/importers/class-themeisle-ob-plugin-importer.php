@@ -30,7 +30,6 @@ class Themeisle_OB_Plugin_Importer {
 
 	public function __construct() {
 		$this->logger = Themeisle_OB_WP_Import_Logger::get_instance();
-		add_action( 'themeisle_ob_after_single_plugin_activation', array( $this, 'fix_otter_redirect' ) );
 	}
 
 	/**
@@ -88,6 +87,8 @@ class Themeisle_OB_Plugin_Importer {
 		$this->logger->log( 'Installed and activated plugins.', 'success' );
 
 		do_action( 'themeisle_ob_after_plugins_install' );
+
+		update_option( 'themeisle_ob_plugins_installed', 'yes' );
 
 		return new WP_REST_Response(
 			array(
@@ -260,15 +261,5 @@ class Themeisle_OB_Plugin_Importer {
 		if ( $slug === 'woocommerce' ) {
 			require_once( $path . '/includes/admin/wc-admin-functions.php' );
 		}
-	}
-
-	/**
-	 * Stop redirecting to Otter dashboard.
-	 */
-	public function fix_otter_redirect( $plugin_slug ) {
-		if ( $plugin_slug !== 'otter-blocks' ) {
-			return;
-		}
-		update_option( 'themeisle_blocks_settings_redirect', false );
 	}
 }
