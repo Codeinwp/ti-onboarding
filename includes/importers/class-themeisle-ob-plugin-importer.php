@@ -32,7 +32,6 @@ class Themeisle_OB_Plugin_Importer {
 		$this->logger = Themeisle_OB_WP_Import_Logger::get_instance();
 	}
 
-
 	/**
 	 * Install Plugins.
 	 *
@@ -88,6 +87,8 @@ class Themeisle_OB_Plugin_Importer {
 		$this->logger->log( 'Installed and activated plugins.', 'success' );
 
 		do_action( 'themeisle_ob_after_plugins_install' );
+
+		update_option( 'themeisle_ob_plugins_installed', 'yes' );
 
 		return new WP_REST_Response(
 			array(
