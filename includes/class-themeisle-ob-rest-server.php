@@ -76,9 +76,9 @@ class Themeisle_OB_Rest_Server {
 		$sdk_modules = \ThemeisleSDK\Common\Module_Factory::get_modules_map();
 		$theme       = get_stylesheet();
 
-        if ( $theme === 'neve' ) {
-            $theme = 'neve-pro-addon';
-        }
+		if ( $theme === 'neve' ) {
+			$theme = 'neve-pro-addon';
+		}
 
 		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
 			return false;
