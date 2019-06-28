@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.2...v1.5.0) (2019-06-28)
+
+
+### Bug Fixes
+
+* add filter to allow outbound link query args changes ([5bfe265](https://github.com/Codeinwp/ti-onboarding/commit/5bfe265))
+* wp-cli plugin install on import ([4b471c2](https://github.com/Codeinwp/ti-onboarding/commit/4b471c2))
+
+
+### Features
+
+* add WP CLI utilities ([66cfb0f](https://github.com/Codeinwp/ti-onboarding/commit/66cfb0f))
+
 ## [1.4.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.1...v1.4.2) (2019-06-05)
 
 
