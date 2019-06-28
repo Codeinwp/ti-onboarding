@@ -8,10 +8,10 @@
  * @package         themeisle-onboarding
  */
 
-	require_once 'importers/helpers/trait-themeisle-ob-image-src-handler.php';
-	require_once 'importers/class-themeisle-ob-content-importer.php';
-	require_once 'importers/class-themeisle-ob-theme-mods-importer.php';
-	require_once 'importers/class-themeisle-ob-widgets-importer.php';
+require_once 'importers/helpers/trait-themeisle-ob-image-src-handler.php';
+require_once 'importers/class-themeisle-ob-content-importer.php';
+require_once 'importers/class-themeisle-ob-theme-mods-importer.php';
+require_once 'importers/class-themeisle-ob-widgets-importer.php';
 
 /**
  * Class Themeisle_OB_WP_Cli
@@ -282,7 +282,8 @@ class Themeisle_OB_WP_Cli {
 			$all_plugins = array_merge( $all_plugins, array_keys( $json_data['mandatory_plugins'] ) );
 		}
 
-		WP_CLI::runcommand( 'plugin install --activate ' . join( ' ', $all_plugins ) );
+		WP_CLI::runcommand( 'plugin install ' . join( ' ', $all_plugins ) );
+		WP_CLI::runcommand( 'plugin activate ' . join( ' ', $all_plugins ) );
 	}
 
 	/**
