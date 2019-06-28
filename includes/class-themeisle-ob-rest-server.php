@@ -427,11 +427,14 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['source']        = 'remote';
 				$returnable[ $editor ][ $template_slug ]['in_pro']        = true;
 				$returnable[ $editor ][ $template_slug ]['outbound_link'] = add_query_arg(
-					apply_filters( 'ti_onboarding_outbound_query_args', array(
-						'utm_medium'   => 'about-' . get_template(),
-						'utm_source'   => $template_slug,
-						'utm_campaign' => 'siteslibrary',
-					) ),
+					apply_filters(
+						'ti_onboarding_outbound_query_args',
+						array(
+							'utm_medium'   => 'about-' . get_template(),
+							'utm_source'   => $template_slug,
+							'utm_campaign' => 'siteslibrary',
+						)
+					),
 					$this->theme_support['pro_link']
 				);
 			}
