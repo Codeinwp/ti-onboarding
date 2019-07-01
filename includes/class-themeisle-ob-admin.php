@@ -216,7 +216,7 @@ class Themeisle_OB_Admin {
 	private function escape_bool_text( $value ) {
 		$allowed = array( 'yes', 'no' );
 
-		if ( ! in_array( $value, $allowed ) ) {
+		if ( ! in_array( $value, $allowed, true ) ) {
 			return 'no';
 		}
 
