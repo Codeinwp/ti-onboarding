@@ -12,6 +12,7 @@ jobs:
       name: "E2E Tests."
       php: 7.1
       script:
+        - npm install || exit 1
         - npm run cypress:run
     - stage: test
       php: 7.0
