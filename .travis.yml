@@ -8,6 +8,11 @@ cache:
     - $HOME/.npm
 jobs:
   include:
+    - stage: e2e
+      name: "E2E Tests."
+      php: 7.1
+      script:
+        - npm run cypress:run
     - stage: test
       php: 7.0
       name: "PHP Code sniffer lint."
@@ -43,6 +48,8 @@ jobs:
         - npm run semantic-release || exit 1
 
 stages:
+  - name: e2e
+    if: head_branch = development and type = "pull_request" and repo = "Codeinwp/ti-onboarding"
   - name: deploy
     if: branch = master and type != "pull_request" and repo = "Codeinwp/ti-onboarding"
   - name: test

@@ -1,4 +1,4 @@
-let homeUrl = '',
+let homeUrl = 'http://localhost:8056',
 		timeout = 50000,
 		routes = {
 			aboutPage: homeUrl + '/wp-admin/themes.php?page=neve-welcome',

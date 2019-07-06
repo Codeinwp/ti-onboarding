@@ -13,6 +13,7 @@
     "build": "cross-env NODE_ENV=production browserify -g envify assets/vue/app.js | uglifyjs -c warnings=false -m > assets/js/bundle.js",
     "addToCommit": "git add assets/js",
     "cypress:open": "cypress open",
+    "cypress:run": "bash ./bin/e2e.sh"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.1",
