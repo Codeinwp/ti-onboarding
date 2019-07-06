@@ -64,7 +64,7 @@
       openModal: function () {
         this.setupImportData()
         this.$store.state.importOptions.isMigration = true
-        this.$store.commit('populatePreview', this.migrationData)
+        this.$store.commit('populatePreview', {siteData: this.migrationData})
         this.$store.commit('showImportModal', true)
       },
       setupImportData: function () {

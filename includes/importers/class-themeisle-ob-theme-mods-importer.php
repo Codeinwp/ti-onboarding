@@ -37,6 +37,13 @@ class Themeisle_OB_Theme_Mods_Importer {
 	private $theme_mods = array();
 
 	/**
+	 * Options array.
+	 *
+	 * @var array
+	 */
+	private $options = array();
+
+	/**
 	 * Import theme mods.
 	 *
 	 * @param WP_REST_Request $request the async request.
@@ -94,6 +101,18 @@ class Themeisle_OB_Theme_Mods_Importer {
 			set_theme_mod( $mod, $value );
 		}
 
+		$this->options = isset( $data['wp_options'] ) ? $data['wp_options'] : array();
+		foreach ( $this->options as $key => $value ) {
+			if ( $value === 'true' ) {
+				$value = true;
+			}
+
+			if ( $value === 'false' ) {
+				$value = false;
+			}
+			update_option( $key, $value );
+		}
+
 		// Set nav menu locations.
 		if ( isset( $this->theme_mods['__ti_import_menus_location'] ) ) {
 			$menus = $this->theme_mods['__ti_import_menus_location'];
@@ -116,7 +135,7 @@ class Themeisle_OB_Theme_Mods_Importer {
 	 *
 	 * @param array $menus represents the menu data as as [location => slug] retrieved from the API.
 	 */
-	private function setup_nav_menus( $menus ) {
+	public function setup_nav_menus( $menus ) {
 		do_action( 'themeisle_ob_before_nav_menus_setup' );
 
 		if ( empty( $menus ) || ! is_array( $menus ) ) {
