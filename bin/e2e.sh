@@ -11,10 +11,10 @@ docker-compose -f $DOCKER_FILE run --rm -u root cli chmod 0777 -R /var/www/html
 docker-compose -f $DOCKER_FILE run --rm cli wp theme install neve
 docker-compose -f $DOCKER_FILE run --rm cli wp theme activate neve
 
-cypress run || export $BUILD_EXIT
+npm run cypress:run || export BUILD_EXIT
 
 ## Bring down the site container.
 docker-compose -f $DOCKER_FILE down
-## Bring down the backstop container.
+
 exit $BUILD_EXIT
 

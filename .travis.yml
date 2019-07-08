@@ -9,11 +9,11 @@ cache:
 jobs:
   include:
     - stage: e2e
-      name: "E2E Tests."
+      name: "E2E Cypress Tests."
       php: 7.1
       script:
         - npm install || exit 1
-        - npm run cypress:run
+        - ./bin/e2e.sh
     - stage: test
       php: 7.0
       name: "PHP Code sniffer lint."
