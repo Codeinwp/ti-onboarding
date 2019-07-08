@@ -1,3 +1,11 @@
+## [1.5.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.5.0...v1.5.1) (2019-07-08)
+
+
+### Bug Fixes
+
+* use wp_filesystem instead of file_get_contents ([b217a9d](https://github.com/Codeinwp/ti-onboarding/commit/b217a9d))
+* use wp_filesystem instead of file_get_contents ([2045b89](https://github.com/Codeinwp/ti-onboarding/commit/2045b89))
+
 # [1.5.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.2...v1.5.0) (2019-06-28)
 
 
