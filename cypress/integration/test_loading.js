@@ -67,7 +67,6 @@ describe( 'Test Initialization and import', function() {
 
 		cy.wait( 500 );
 		cy.get( '.neve-main' ).should( 'exist' ).and( 'be.visible' );
-		cy.get('.neve-not-exist').should('exist');
 	} );
 } );
 

@@ -16,5 +16,3 @@ npm run cypress:run || exit 1
 ## Bring down the site container.
 docker-compose -f $DOCKER_FILE down
 
-exit $BUILD_EXIT
-
