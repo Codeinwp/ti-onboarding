@@ -1,3 +1,32 @@
+# [1.5.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.2...v1.5.0) (2019-06-28)
+
+
+### Bug Fixes
+
+* add filter to allow outbound link query args changes ([5bfe265](https://github.com/Codeinwp/ti-onboarding/commit/5bfe265))
+* wp-cli plugin install on import ([4b471c2](https://github.com/Codeinwp/ti-onboarding/commit/4b471c2))
+
+
+### Features
+
+* add WP CLI utilities ([66cfb0f](https://github.com/Codeinwp/ti-onboarding/commit/66cfb0f))
+
+## [1.4.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.1...v1.4.2) (2019-06-05)
+
+
+### Bug Fixes
+
+* license check for Neve Pro ([36527ff](https://github.com/Codeinwp/ti-onboarding/commit/36527ff))
+* license check for Neve Pro ([5c5f250](https://github.com/Codeinwp/ti-onboarding/commit/5c5f250))
+
+## [1.4.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.4.0...v1.4.1) (2019-05-24)
+
+
+### Bug Fixes
+
+* add option for plugins import ([793b063](https://github.com/Codeinwp/ti-onboarding/commit/793b063))
+* disable otter redirect [Codeinwp/neve[#539](https://github.com/Codeinwp/ti-onboarding/issues/539)] ([8898bd0](https://github.com/Codeinwp/ti-onboarding/commit/8898bd0))
+
 # [1.4.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.3.6...v1.4.0) (2019-05-07)
 
 
