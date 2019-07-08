@@ -368,8 +368,10 @@ class Themeisle_OB_WP_Cli {
 		$editor = $site['editor'];
 		$source = $site['source'];
 
+		global $wp_filesystem;
+		WP_Filesystem();
 		if ( $source === 'local' ) {
-			return json_decode( file_get_contents( get_template_directory() . '/onboarding/' . $slug . '/data.json' ), true );
+			return json_decode( $wp_filesystem->get_contents( get_template_directory() . '/onboarding/' . $slug . '/data.json' ), true );
 		}
 		$site_url      = $this->data[ $source ][ $editor ][ $slug ]['url'];
 		$request       = wp_remote_get( $site_url . 'wp-json/ti-demo-data/data' );
