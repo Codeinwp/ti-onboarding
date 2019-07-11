@@ -53,7 +53,7 @@ jobs:
 
 stages:
   - name: e2e
-    if: head_branch = cypress and type = "pull_request" and repo = "Codeinwp/ti-onboarding"
+    if: head_branch = development and type = "pull_request" and repo = "Codeinwp/ti-onboarding"
   - name: deploy
     if: branch = master and type != "pull_request" and repo = "Codeinwp/ti-onboarding"
   - name: test
