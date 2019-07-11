@@ -153,6 +153,7 @@ class Themeisle_OB_Admin {
 			'homeUrl'         => esc_url( home_url() ),
 			'i18ln'           => $this->get_strings(),
 			'onboarding'      => 'no',
+			'readyImport'     => '',
 			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
 			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
 			'importSteps'     => $this->get_import_steps(),
@@ -162,6 +163,10 @@ class Themeisle_OB_Admin {
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
 		if ( $is_onboarding ) {
 			$api['onboarding'] = 'yes';
+		}
+
+		if ( isset( $_GET['readyimport'] ) ) {
+			$api['readyImport'] = $_GET['readyimport'];
 		}
 
 		return $api;
