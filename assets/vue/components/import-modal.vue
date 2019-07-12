@@ -222,6 +222,9 @@
         if (editor === 'gutenberg') {
           url = this.homeUrl + '/wp-admin/post.php?post=' + pageId + '&action=edit'
         }
+        if( editor === 'brizy' ) {
+			url = this.homeUrl + '/?brizy-edit'
+		}
         if (customizerRedirect === 'customizer') {
           url = this.homeUrl + '/wp-admin/customize.php'
         }
