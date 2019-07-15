@@ -1,3 +1,11 @@
+## [1.6.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.0...v1.6.1) (2019-07-15)
+
+
+### Bug Fixes
+
+* allow defined screenshots for local demos [fixes [#63](https://github.com/Codeinwp/ti-onboarding/issues/63)] ([3d25571](https://github.com/Codeinwp/ti-onboarding/commit/3d25571))
+* allow defined screenshots for local demos [fixes [#63](https://github.com/Codeinwp/ti-onboarding/issues/63)] ([d721c5e](https://github.com/Codeinwp/ti-onboarding/commit/d721c5e))
+
 # [1.6.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.5.1...v1.6.0) (2019-07-15)
 
 
