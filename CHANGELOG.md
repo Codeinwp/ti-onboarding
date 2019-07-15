@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.5.1...v1.6.0) (2019-07-15)
+
+
+### Features
+
+* add import on access [[#68](https://github.com/Codeinwp/ti-onboarding/issues/68)] ([7efd81f](https://github.com/Codeinwp/ti-onboarding/commit/7efd81f))
+
 ## [1.5.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.5.0...v1.5.1) (2019-07-08)
 
 
