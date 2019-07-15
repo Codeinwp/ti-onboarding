@@ -11,7 +11,9 @@
     "lint": "eslint --ext .js,.vue assets/vue/**",
     "semantic-release": "semantic-release --debug",
     "build": "cross-env NODE_ENV=production browserify -g envify assets/vue/app.js | uglifyjs -c warnings=false -m > assets/js/bundle.js",
-    "addToCommit": "git add assets/js"
+    "addToCommit": "git add assets/js",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.1",
@@ -25,6 +27,7 @@
     "browserify-hmr": "^0.3.1",
     "cross-env": "^1.0.6",
     "css-loader": "^0.23.0",
+    "cypress": "^3.3.2",
     "envify": "^3.4.1",
     "eslint": "^3.3.0",
     "eslint-config-standard": "^5.3.5",

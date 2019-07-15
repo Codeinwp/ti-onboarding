@@ -153,6 +153,7 @@ class Themeisle_OB_Admin {
 			'homeUrl'         => esc_url( home_url() ),
 			'i18ln'           => $this->get_strings(),
 			'onboarding'      => 'no',
+			'readyImport'     => '',
 			'contentImported' => $this->escape_bool_text( get_theme_mod( 'ti_content_imported', 'no' ) ),
 			'aboutUrl'        => esc_url( admin_url( 'themes.php?page=' . $theme->__get( 'stylesheet' ) . '-welcome' ) ),
 			'importSteps'     => $this->get_import_steps(),
@@ -162,6 +163,10 @@ class Themeisle_OB_Admin {
 		$is_onboarding = isset( $_GET['onboarding'] ) && $_GET['onboarding'] === 'yes';
 		if ( $is_onboarding ) {
 			$api['onboarding'] = 'yes';
+		}
+
+		if ( isset( $_GET['readyimport'] ) ) {
+			$api['readyImport'] = $_GET['readyimport'];
 		}
 
 		return $api;
@@ -174,32 +179,33 @@ class Themeisle_OB_Admin {
 	 */
 	private function get_strings() {
 		return array(
-			'preview_btn'             => __( 'Preview', 'textdomain' ),
-			'import_btn'              => __( 'Import', 'textdomain' ),
-			'pro_btn'                 => __( 'Get the PRO version!', 'textdomain' ),
-			'importing'               => __( 'Importing', 'textdomain' ),
-			'cancel_btn'              => __( 'Cancel', 'textdomain' ),
-			'loading'                 => __( 'Loading', 'textdomain' ),
-			'go_to_site'              => __( 'View Website', 'textdomain' ),
-			'edit_template'           => __( 'Add your own content', 'textdomain' ),
-			'back'                    => __( 'Back to Sites Library', 'textdomain' ),
-			'note'                    => __( 'Note', 'textdomain' ),
-			'advanced_options'        => __( 'Advanced Options', 'textdomain' ),
-			'plugins'                 => __( 'Plugins', 'textdomain' ),
-			'general'                 => __( 'General', 'textdomain' ),
-			'later'                   => __( 'Keep current layout', 'textdomain' ),
-			'search'                  => __( 'Search', 'textdomain' ),
-			'content'                 => __( 'Content', 'textdomain' ),
-			'customizer'              => __( 'Customizer', 'textdomain' ),
-			'widgets'                 => __( 'Widgets', 'textdomain' ),
-			'backup_disclaimer'       => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
-			'placeholders_disclaimer' => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
-			'unsplash_gallery_link'   => __( 'Here is our own collection of related images you can use for your site.', 'textdomain' ),
-			'import_done'             => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
-			'pro_demo'                => __( 'Available in the PRO version', 'textdomain' ),
-			'copy_error_code'         => __( 'Copy error code', 'textdomain' ),
-			'download_error_log'      => __( 'Download error log', 'textdomain' ),
-			'error_report'            => sprintf(
+			'preview_btn'                 => __( 'Preview', 'textdomain' ),
+			'import_btn'                  => __( 'Import', 'textdomain' ),
+			'pro_btn'                     => __( 'Get the PRO version!', 'textdomain' ),
+			'importing'                   => __( 'Importing', 'textdomain' ),
+			'cancel_btn'                  => __( 'Cancel', 'textdomain' ),
+			'loading'                     => __( 'Loading', 'textdomain' ),
+			'go_to_site'                  => __( 'View Website', 'textdomain' ),
+			'edit_template'               => __( 'Add your own content', 'textdomain' ),
+			'back'                        => __( 'Back to Sites Library', 'textdomain' ),
+			'note'                        => __( 'Note', 'textdomain' ),
+			'advanced_options'            => __( 'Advanced Options', 'textdomain' ),
+			'plugins'                     => __( 'Plugins', 'textdomain' ),
+			'general'                     => __( 'General', 'textdomain' ),
+			'later'                       => __( 'Keep current layout', 'textdomain' ),
+			'search'                      => __( 'Search', 'textdomain' ),
+			'content'                     => __( 'Content', 'textdomain' ),
+			'customizer'                  => __( 'Customizer', 'textdomain' ),
+			'widgets'                     => __( 'Widgets', 'textdomain' ),
+			'backup_disclaimer'           => __( 'We recommend you backup your website content before attempting a full site import.', 'textdomain' ),
+			'placeholders_disclaimer'     => __( 'Due to copyright issues, some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
+			'placeholders_disclaimer_new' => __( 'Some of the demo images will not be imported and will be replaced by placeholder images.', 'textdomain' ),
+			'unsplash_gallery_link'       => __( 'Here is our own collection of related images you can use for your site.', 'textdomain' ),
+			'import_done'                 => __( 'Content was successfully imported. Enjoy your new site!', 'textdomain' ),
+			'pro_demo'                    => __( 'Available in the PRO version', 'textdomain' ),
+			'copy_error_code'             => __( 'Copy error code', 'textdomain' ),
+			'download_error_log'          => __( 'Download error log', 'textdomain' ),
+			'error_report'                => sprintf(
 				__( 'Hi! It seems there is a configuration issue with your server that\'s causing the import to fail. Please %1$s with us with the error code below, so we can help you fix this.', 'textdomain' ),
 				sprintf( '<a href="https://themeisle.com/contact">%1$s <i class="dashicons dashicons-external"></i></a>', __( 'get in touch', 'textdomain' ) )
 			),

@@ -12,6 +12,7 @@ require_once 'importers/helpers/trait-themeisle-ob-image-src-handler.php';
 require_once 'importers/class-themeisle-ob-content-importer.php';
 require_once 'importers/class-themeisle-ob-theme-mods-importer.php';
 require_once 'importers/class-themeisle-ob-widgets-importer.php';
+require_once 'importers/class-themeisle-ob-plugin-importer.php';
 
 /**
  * Class Themeisle_OB_WP_Cli
@@ -65,6 +66,13 @@ class Themeisle_OB_WP_Cli {
 	private $widgets_importer;
 
 	/**
+	 * Plugins importer.
+	 *
+	 * @var Themeisle_OB_Plugin_Importer
+	 */
+	private $plugin_importer;
+
+	/**
 	 * Setup class props.
 	 */
 	private function setup_props() {
@@ -73,6 +81,7 @@ class Themeisle_OB_WP_Cli {
 		$this->theme_mods_importer = new Themeisle_OB_Theme_Mods_Importer();
 		$this->content_importer    = new Themeisle_OB_Content_Importer();
 		$this->widgets_importer    = new Themeisle_OB_Widgets_Importer();
+		$this->plugin_importer     = new Themeisle_OB_Plugin_Importer();
 	}
 
 	/**
@@ -272,7 +281,7 @@ class Themeisle_OB_WP_Cli {
 	 * @param array $json_data site json data.
 	 */
 	private function import_plugins_for_starter_site( $json_data ) {
-		$all_plugins = array( 'wordpress-importer' );
+		$all_plugins = array();
 
 		if ( isset( $json_data['recommended_plugins'] ) ) {
 			$all_plugins = array_merge( $all_plugins, array_keys( $json_data['recommended_plugins'] ) );
@@ -282,8 +291,15 @@ class Themeisle_OB_WP_Cli {
 			$all_plugins = array_merge( $all_plugins, array_keys( $json_data['mandatory_plugins'] ) );
 		}
 
-		WP_CLI::runcommand( 'plugin install ' . join( ' ', $all_plugins ) );
-		WP_CLI::runcommand( 'plugin activate ' . join( ' ', $all_plugins ) );
+		$all_plugins = array_combine( $all_plugins, $all_plugins );
+		$all_plugins = array_fill_keys( $all_plugins, true );
+
+		WP_CLI::line( 'Installing...' );
+		WP_CLI::print_value( $all_plugins );
+
+		$this->plugin_importer->run_plugins_install( $all_plugins );
+
+		WP_CLI::success( 'Plugins installed and activated' );
 	}
 
 	/**
