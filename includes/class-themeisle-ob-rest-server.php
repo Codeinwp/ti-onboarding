@@ -274,8 +274,8 @@ class Themeisle_OB_Rest_Server {
 
 		$old_theme           = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
 		$folder_name         = $old_theme;
-		$previous_theme      = $this->get_parent_theme( $old_theme );
-		$previous_theme_slug = $previous_theme->get( 'Template' );
+		$previous_theme_slug = $this->get_parent_theme( $old_theme );
+
 
 		if(!empty( $previous_theme_slug ) ){
 			$folder_name = $previous_theme_slug;
@@ -328,7 +328,7 @@ class Themeisle_OB_Rest_Server {
 			return false;
 		}
 		$theme_object = $available_themes[$previous_theme];
-		return $theme_object;
+		return $theme_object->get( 'Template' );
 	}
 
 	/**
