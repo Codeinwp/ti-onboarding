@@ -272,7 +272,16 @@ class Themeisle_OB_Rest_Server {
 
 		$data = $this->theme_support['can_migrate'];
 
-		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$old_theme           = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$folder_name         = $old_theme;
+		$previous_theme      = $this->get_parent_theme( $old_theme );
+		$previous_theme_slug = $previous_theme->get( 'Template' );
+
+		if(!empty( $previous_theme_slug ) ){
+			$folder_name = $previous_theme_slug;
+			$old_theme = $previous_theme_slug;
+		}
+
 		if ( ! array_key_exists( $old_theme, $data ) ) {
 			return array();
 		}
@@ -282,12 +291,12 @@ class Themeisle_OB_Rest_Server {
 			return array();
 		}
 
-		$folder_name = $old_theme;
+
 		if ( $old_theme === 'zerif-lite' || $old_theme === 'zerif-pro' ) {
 			$folder_name = 'zelle';
 		}
 
-		return array(
+		$options = array(
 			'theme_name'          => ! empty( $data[ $old_theme ]['theme_name'] ) ? esc_html( $data[ $old_theme ]['theme_name'] ) : '',
 			'screenshot'          => get_template_directory_uri() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.png',
 			'template'            => get_template_directory() . Themeisle_Onboarding::OBOARDING_PATH . '/migration/' . $folder_name . '/' . $data[ $old_theme ]['template'] . '.json',
@@ -298,6 +307,28 @@ class Themeisle_OB_Rest_Server {
 			'mandatory_plugins'   => $data[ $old_theme ]['mandatory_plugins'] ? $data[ $old_theme ]['mandatory_plugins'] : array(),
 			'recommended_plugins' => $data[ $old_theme ]['recommended_plugins'] ? $data[ $old_theme ]['recommended_plugins'] : array(),
 		);
+
+		if ( !empty( $previous_theme_slug ) ){
+			$options['description'] = __('Hi! We\'ve noticed you were using a child theme of Zelle before. To make your transition easier, we can help you keep the same homepage settings you had before but in original Zelle\'s style, by converting it into an Elementor template.', 'textdomain' );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get previous theme parent if it's a child theme.
+	 *
+	 * @param string $previous_theme Previous theme slug.
+	 *
+	 * @return string
+	 */
+	private function get_parent_theme( $previous_theme ){
+		$available_themes = wp_get_themes();
+		if( ! array_key_exists( $previous_theme, $available_themes ) ){
+			return false;
+		}
+		$theme_object = $available_themes[$previous_theme];
+		return $theme_object;
 	}
 
 	/**
@@ -574,7 +605,8 @@ class Themeisle_OB_Rest_Server {
 			);
 		}
 		$migrator = new $class_name;
-		$import   = $migrator->import_zelle_frontpage( $params['template'] );
+		$old_theme    = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$import   = $migrator->import_zelle_frontpage( $params['template'], $old_theme );
 
 		if ( is_wp_error( $import ) ) {
 			return new WP_REST_Response(
