@@ -276,7 +276,7 @@ class Themeisle_OB_Rest_Server {
 		$folder_name         = $old_theme;
 		$previous_theme_slug = $this->get_parent_theme( $old_theme );
 
-		if( ! empty( $previous_theme_slug ) ) {
+		if ( ! empty( $previous_theme_slug ) ) {
 			$folder_name = $previous_theme_slug;
 			$old_theme   = $previous_theme_slug;
 		}
@@ -320,7 +320,7 @@ class Themeisle_OB_Rest_Server {
 	 *
 	 * @return string
 	 */
-	private function get_parent_theme( $previous_theme ){
+	private function get_parent_theme( $previous_theme ) {
 		$available_themes = wp_get_themes();
 		if ( ! array_key_exists( $previous_theme, $available_themes ) ) {
 			return false;
