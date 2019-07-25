@@ -46,7 +46,7 @@ class Themeisle_OB_Zelle_Importer {
 	 * @return WP_Error
 	 */
 	public function import_zelle_frontpage( $template_path, $theme_slug ) {
-		$this->previous_theme_content = get_option( 'theme_mods_'.$theme_slug );
+		$this->previous_theme_content = get_option( 'theme_mods_' . $theme_slug );
 
 		require_once( ABSPATH . '/wp-admin/includes/image.php' );
 		require_once( ABSPATH . '/wp-admin/includes/file.php' );

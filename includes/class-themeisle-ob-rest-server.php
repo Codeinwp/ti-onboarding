@@ -276,10 +276,9 @@ class Themeisle_OB_Rest_Server {
 		$folder_name         = $old_theme;
 		$previous_theme_slug = $this->get_parent_theme( $old_theme );
 
-
-		if(!empty( $previous_theme_slug ) ){
+		if( ! empty( $previous_theme_slug ) ) {
 			$folder_name = $previous_theme_slug;
-			$old_theme = $previous_theme_slug;
+			$old_theme   = $previous_theme_slug;
 		}
 
 		if ( ! array_key_exists( $old_theme, $data ) ) {
@@ -290,7 +289,6 @@ class Themeisle_OB_Rest_Server {
 		if ( $content_imported === 'yes' ) {
 			return array();
 		}
-
 
 		if ( $old_theme === 'zerif-lite' || $old_theme === 'zerif-pro' ) {
 			$folder_name = 'zelle';
@@ -308,8 +306,8 @@ class Themeisle_OB_Rest_Server {
 			'recommended_plugins' => $data[ $old_theme ]['recommended_plugins'] ? $data[ $old_theme ]['recommended_plugins'] : array(),
 		);
 
-		if ( !empty( $previous_theme_slug ) ){
-			$options['description'] = __('Hi! We\'ve noticed you were using a child theme of Zelle before. To make your transition easier, we can help you keep the same homepage settings you had before but in original Zelle\'s style, by converting it into an Elementor template.', 'textdomain' );
+		if ( ! empty( $previous_theme_slug ) ) {
+			$options['description'] = __( 'Hi! We\'ve noticed you were using a child theme of Zelle before. To make your transition easier, we can help you keep the same homepage settings you had before but in original Zelle\'s style, by converting it into an Elementor template.', 'textdomain' );
 		}
 
 		return $options;
@@ -324,10 +322,10 @@ class Themeisle_OB_Rest_Server {
 	 */
 	private function get_parent_theme( $previous_theme ){
 		$available_themes = wp_get_themes();
-		if( ! array_key_exists( $previous_theme, $available_themes ) ){
+		if ( ! array_key_exists( $previous_theme, $available_themes ) ) {
 			return false;
 		}
-		$theme_object = $available_themes[$previous_theme];
+		$theme_object = $available_themes[ $previous_theme ];
 		return $theme_object->get( 'Template' );
 	}
 
@@ -611,9 +609,9 @@ class Themeisle_OB_Rest_Server {
 				)
 			);
 		}
-		$migrator = new $class_name;
-		$old_theme    = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
-		$import   = $migrator->import_zelle_frontpage( $params['template'], $old_theme );
+		$migrator  = new $class_name;
+		$old_theme = get_theme_mod( 'ti_prev_theme', 'ti_onboarding_undefined' );
+		$import    = $migrator->import_zelle_frontpage( $params['template'], $old_theme );
 
 		if ( is_wp_error( $import ) ) {
 			return new WP_REST_Response(
