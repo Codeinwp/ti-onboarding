@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.1...v1.6.2) (2019-07-29)
+
+
+### Bug Fixes
+
+* release commit ([74277f9](https://github.com/Codeinwp/ti-onboarding/commit/74277f9))
+
 ## [1.6.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.0...v1.6.1) (2019-07-15)
 
 
