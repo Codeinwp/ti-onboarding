@@ -1,6 +1,6 @@
 <?php
 /**
- * Onboarding Rest Endpoints Handler.
+ * Rest Endpoints Handler.
  *
  * Author:          Andrei Baicus <andrei@themeisle.com>
  * Created on:      12/07/2018
