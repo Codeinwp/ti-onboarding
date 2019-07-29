@@ -100,11 +100,21 @@ class Themeisle_OB_Plugin_Importer {
 			$this->activate_single_plugin( $plugin_slug );
 		}
 
+		$this->remove_possible_redirects();
 		$this->logger->log( 'Installed and activated plugins.', 'success' );
 
 		do_action( 'themeisle_ob_after_plugins_install' );
 
 		update_option( 'themeisle_ob_plugins_installed', 'yes' );
+	}
+
+	/**
+	 * Remove admin redirects.
+	 */
+	private function remove_possible_redirects() {
+		delete_transient( '_wc_activation_redirect' );
+		delete_transient( 'wpforms_activation_redirect' );
+		update_option( 'themeisle_blocks_settings_redirect', false );
 	}
 
 	/**
