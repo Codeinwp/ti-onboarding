@@ -5,7 +5,7 @@
  * Created on:      12/07/2018
  *
  * @package         themeisle-onboarding
- * @soundtrack      Summer On Lock (feat. Pusha T, Jadakiss, Fabolous, Agent Sasco - Royce da 5'9" 
+ * @soundtrack      Summer On Lock (feat. Pusha T, Jadakiss, Fabolous, Agent Sasco - Royce da 5'9"
  */
 
 /**
