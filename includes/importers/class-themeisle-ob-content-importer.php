@@ -126,13 +126,6 @@ class Themeisle_OB_Content_Importer {
 
 		if ( empty( $frontpage_id ) ) {
 			$this->logger->log( 'No front page ID.' );
-
-			return new WP_REST_Response(
-				array(
-					'data'    => 'ti__ob_front_page_id_err_1',
-					'success' => false,
-				)
-			);
 		}
 
 		return new WP_REST_Response(
@@ -175,11 +168,10 @@ class Themeisle_OB_Content_Importer {
 		if ( ! is_array( $args ) ) {
 			return;
 		}
-
-		if ( $args['front_page'] === null && $args['blog_page'] === null ) {
+		if ( empty( $args['front_page'] ) && empty( $args['blog_page'] ) ) {
 			$this->logger->log( 'No front page to set up.', 'success' );
 
-			return;
+			return null;
 		}
 
 		update_option( 'show_on_front', 'page' );
