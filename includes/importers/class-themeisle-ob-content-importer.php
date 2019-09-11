@@ -47,6 +47,7 @@ class Themeisle_OB_Content_Importer {
 		$params           = $request->get_body_params();
 		$body             = $params['data'];
 		$content_file_url = $body['contentFile'];
+		$page_builder     = isset( $body['editor'] ) ? $body['editor'] : '';
 
 		if ( empty( $content_file_url ) ) {
 			$this->logger->log( "No content file to import at url {$content_file_url}" );
@@ -89,7 +90,7 @@ class Themeisle_OB_Content_Importer {
 		}
 
 		$this->logger->log( 'Starting content import...', 'progress' );
-		$import_status = $this->import_file( $content_file_path, $body );
+		$import_status = $this->import_file( $content_file_path, $body, $page_builder );
 
 		if ( is_wp_error( $import_status ) ) {
 			$this->logger->log( "Import crashed with message: {$import_status->get_error_message()}" );
@@ -253,10 +254,11 @@ class Themeisle_OB_Content_Importer {
 	 *
 	 * @param string $file_path the file path to import.
 	 * @param array  $req_body  the request body to be passed to the alterator.
+	 * @param string $builder   the page builder used.
 	 *
 	 * @return WP_Error|true
 	 */
-	public function import_file( $file_path, $req_body = array() ) {
+	public function import_file( $file_path, $req_body = array(), $builder = '' ) {
 		if ( empty( $file_path ) || ! file_exists( $file_path ) || ! is_readable( $file_path ) ) {
 			return new WP_Error( 'ti__ob_content_err_1', 'No content file' );
 		}
@@ -264,7 +266,7 @@ class Themeisle_OB_Content_Importer {
 		require_once 'helpers/class-themeisle-ob-importer-alterator.php';
 		$alterator = new Themeisle_OB_Importer_Alterator( $req_body );
 
-		$importer = new Themeisle_OB_WP_Import();
+		$importer = new Themeisle_OB_WP_Import( $builder );
 		$result   = $importer->import( $file_path );
 
 		return $result;
