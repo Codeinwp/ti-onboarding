@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.3...v1.7.0) (2019-09-11)
+
+
+### Features
+
+* add Beaver Builder import compatibility [Codeinwp/neve[#734](https://github.com/Codeinwp/ti-onboarding/issues/734)] ([c66680a](https://github.com/Codeinwp/ti-onboarding/commit/c66680a))
+
 ## [1.6.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.2...v1.6.3) (2019-08-02)
 
 
