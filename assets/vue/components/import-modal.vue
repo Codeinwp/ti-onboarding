@@ -225,6 +225,9 @@
         if( editor === 'brizy' ) {
 			url = this.homeUrl + '/?brizy-edit'
 		}
+        if( editor === 'beaver-builder' ) {
+			url = this.homeUrl + '/?fl_builder'
+		}
         if (customizerRedirect === 'customizer') {
           url = this.homeUrl + '/wp-admin/customize.php'
         }
