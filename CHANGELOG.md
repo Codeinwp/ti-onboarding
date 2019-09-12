@@ -1,3 +1,13 @@
+## [1.7.5](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.4...v1.7.5) (2019-09-12)
+
+
+### Bug Fixes
+
+* adds redundant files to the exported ones, fix additional notices and warnings and phpunit tests ([a1b08c1](https://github.com/Codeinwp/ti-onboarding/commit/a1b08c1))
+* elementor cache busting ([207c372](https://github.com/Codeinwp/ti-onboarding/commit/207c372))
+* elementor cache busting ([b8e41a6](https://github.com/Codeinwp/ti-onboarding/commit/b8e41a6))
+* remove redundant code, site import process and caching ([780eced](https://github.com/Codeinwp/ti-onboarding/commit/780eced))
+
 ## [1.7.4](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.3...v1.7.4) (2019-09-12)
 
 
