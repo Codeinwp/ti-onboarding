@@ -23,10 +23,6 @@ class Themeisle_OB_Rest_Server {
 	 */
 	private $frontpage_id;
 
-	/**
-	 * @var string
-	 */
-	private $cache_namespace;
 
 	/**
 	 * The theme support contents.
@@ -152,7 +148,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return WP_REST_Response
 	 */
 	public function init_library() {
-		$this->cache_namespace = apply_filters( 'ti_onboarding_filter_cache_key', false );
 		if ( empty( $this->theme_support ) ) {
 			return new WP_REST_Response(
 				array(
@@ -303,11 +298,10 @@ class Themeisle_OB_Rest_Server {
 	private function get_local_templates() {
 		$returnable = array();
 
-		if ( ! empty( $this->cache_namespace ) ) {
-			$transient = get_transient( $this->cache_namespace . '_local' );
-			if ( $transient !== false ) {
-				return $transient;
-			}
+		$cache_key = sprintf( '_%s_templates_local', md5( serialize( $this->theme_support['local'] ) ) );
+
+		if ( false !== ( $cached_data = get_transient( $cache_key ) ) ) {
+			return $cached_data;
 		}
 
 		require_once( ABSPATH . '/wp-admin/includes/file.php' );
@@ -357,9 +351,7 @@ class Themeisle_OB_Rest_Server {
 			}
 		}
 
-		if ( ! empty( $this->cache_namespace ) ) {
-			set_transient( $this->cache_namespace . '_local', $returnable, DAY_IN_SECONDS );
-		}
+		set_transient( $cache_key, $returnable, DAY_IN_SECONDS );
 
 		return $returnable;
 	}
@@ -370,14 +362,13 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_remote_templates() {
-		if ( ! empty( $this->cache_namespace ) ) {
-			$transient = get_transient( $this->cache_namespace . '_remote' );
-			if ( $transient !== false ) {
-				return $transient;
-			}
-		}
 
 		$returnable = array();
+		$cache_key  = sprintf( '_%s_templates_remote', md5( serialize( $this->theme_support['remote'] ) ) );
+
+		if ( false !== ( $cached_data = get_transient( $cache_key ) ) ) {
+			return $cached_data;
+		}
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
 
@@ -387,11 +378,15 @@ class Themeisle_OB_Rest_Server {
 
 			foreach ( $this->theme_support['remote'][ $editor ] as $template_slug => $template_data ) {
 				if ( isset( $template_data['local_json'] ) ) {
+					require_once( ABSPATH . '/wp-admin/includes/file.php' );
 					global $wp_filesystem;
 					WP_Filesystem();
 					$json_body = $wp_filesystem->get_contents( $template_data['local_json'] );
 				} else {
-					$request       = wp_remote_get( $template_data['url'] . '/wp-json/ti-demo-data/data' );
+					$url = ( isset( $template_data['remote_json'] ) ? $template_data['remote_json'] : $template_data['url'] ) . '/wp-json/ti-demo-data/data';
+
+					$request = wp_remote_get( $url );
+
 					$response_code = wp_remote_retrieve_response_code( $request );
 
 					if ( $response_code !== 200 ) {
@@ -414,10 +409,7 @@ class Themeisle_OB_Rest_Server {
 
 			}
 		}
-
-		if ( ! empty( $this->cache_namespace ) ) {
-			set_transient( $this->cache_namespace . '_remote', $returnable, DAY_IN_SECONDS );
-		}
+		set_transient( $cache_key, $returnable, DAY_IN_SECONDS );
 
 		return $returnable;
 	}
@@ -434,17 +426,8 @@ class Themeisle_OB_Rest_Server {
 			if ( ! isset( $this->theme_support['upsell'][ $editor ] ) ) {
 				continue;
 			}
-
 			foreach ( $this->theme_support['upsell'][ $editor ] as $template_slug => $template_data ) {
-				$request       = wp_remote_get( $template_data['url'] . '/wp-json/ti-demo-data/data' );
-				$response_code = wp_remote_retrieve_response_code( $request );
-				if ( $response_code !== 200 ) {
-					continue;
-				}
-				if ( empty( $request['body'] ) || ! isset( $request['body'] ) ) {
-					continue;
-				}
-				$returnable[ $editor ][ $template_slug ]                  = json_decode( $request['body'], true );
+				$returnable[ $editor ][ $template_slug ]                  = [];
 				$returnable[ $editor ][ $template_slug ]['title']         = esc_html( $template_data['title'] );
 				$returnable[ $editor ][ $template_slug ]['demo_url']      = esc_url( $template_data['url'] );
 				$returnable[ $editor ][ $template_slug ]['screenshot']    = esc_url( $template_data['screenshot'] );
