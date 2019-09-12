@@ -410,7 +410,7 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['demo_url']         = esc_url( $template_data['url'] );
 				$returnable[ $editor ][ $template_slug ]['screenshot']       = esc_url( $template_data['screenshot'] );
 				$returnable[ $editor ][ $template_slug ]['source']           = 'remote';
-				$returnable[ $editor ][ $template_slug ]['unsplash_gallery'] = $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] ?: '';
+				$returnable[ $editor ][ $template_slug ]['unsplash_gallery'] = isset( $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] ) ? $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] : '';
 
 			}
 		}

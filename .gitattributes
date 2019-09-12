@@ -15,7 +15,12 @@ phpunit.xml 	    export-ignore
 README.md 		export-ignore
 tests 		    export-ignore
 bin 		    export-ignore
+cypress 		export-ignore
+.babelrc 		export-ignore
+.eslintrc 		export-ignore
+cypress.json 	export-ignore
 README.md 		export-ignore
+js/vue 		    export-ignore
 # Set the default behavior for all files.
 * text=auto
 

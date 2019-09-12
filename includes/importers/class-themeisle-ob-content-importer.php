@@ -229,9 +229,13 @@ class Themeisle_OB_Content_Importer {
 	 * Maybe bust cache for elementor plugin.
 	 */
 	private function maybe_bust_elementor_cache() {
-		if ( class_exists( '\Elementor\Plugin' ) ) {
-			\Elementor\Plugin::instance()->files_manager->clear_cache();
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
 		}
+		if ( null === \Elementor\Plugin::instance()->files_manager ) {
+			return;
+		}
+		\Elementor\Plugin::instance()->files_manager->clear_cache();
 	}
 
 	/**

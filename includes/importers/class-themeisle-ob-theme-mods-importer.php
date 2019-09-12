@@ -103,18 +103,20 @@ class Themeisle_OB_Theme_Mods_Importer {
 
 		$this->options = isset( $data['wp_options'] ) ? $data['wp_options'] : array();
 		foreach ( $this->options as $key => $value ) {
-			array_walk_recursive(
-				$value,
-				function ( &$item ) {
-					if ( $item == 'true' ) {
-						$item = true;
-					} elseif ( $item == 'false' ) {
-						$item = false;
-					} elseif ( is_numeric( $item ) ) {
-						$item = intval( $item );
+			if ( is_array( $value ) ) {
+				array_walk_recursive(
+					$value,
+					function ( &$item ) {
+						if ( $item == 'true' ) {
+							$item = true;
+						} elseif ( $item == 'false' ) {
+							$item = false;
+						} elseif ( is_numeric( $item ) ) {
+							$item = intval( $item );
+						}
 					}
-				}
-			);
+				);
+			}
 			update_option( $key, $value );
 		}
 
