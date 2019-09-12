@@ -569,7 +569,6 @@ class Themeisle_OB_Beaver_ParserXML extends Themeisle_OB_WXR_Parser_XML {
 			case 'wp:postmeta':
 				if ( ! empty( $this->sub_data ) ) {
 					if ( stristr( $this->sub_data['key'], '_fl_builder_' ) ) {
-						$this->set_pcre_limit( apply_filters( 'fl_builder_importer_pcre', '23001337' ) );
 						$this->sub_data['value'] = Themeisle_OB_Beaver_Data_Fix::run( serialize( $this->sub_data['value'] ) );
 					}
 					$this->data['postmeta'][] = $this->sub_data;
@@ -612,12 +611,6 @@ class Themeisle_OB_Beaver_ParserXML extends Themeisle_OB_WXR_Parser_XML {
 				}
 		}
 		$this->cdata = false;
-	}
-
-	function set_pcre_limit( $value ) {
-
-		@ini_set( 'pcre.backtrack_limit', $value ); // @codingStandardsIgnoreLine
-		@ini_set( 'pcre.recursion_limit', $value ); // @codingStandardsIgnoreLine
 	}
 }
 
