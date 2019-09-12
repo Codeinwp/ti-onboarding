@@ -229,16 +229,13 @@ class Themeisle_OB_Content_Importer {
 	 * Maybe bust cache for elementor plugin.
 	 */
 	private function maybe_bust_elementor_cache() {
-		if ( class_exists( '\Elementor\Plugin' ) ) {
-			wp_remote_post(
-				esc_url( admin_url( 'admin-ajax.php' ) ),
-				array(
-					'body' => array(
-						'action' => 'elementor_clear_cache',
-					),
-				)
-			);
+		if ( ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
 		}
+		if ( null === \Elementor\Plugin::instance()->files_manager ) {
+			return;
+		}
+		\Elementor\Plugin::instance()->files_manager->clear_cache();
 	}
 
 	/**
