@@ -230,14 +230,7 @@ class Themeisle_OB_Content_Importer {
 	 */
 	private function maybe_bust_elementor_cache() {
 		if ( class_exists( '\Elementor\Plugin' ) ) {
-			wp_remote_post(
-				esc_url( admin_url( 'admin-ajax.php' ) ),
-				array(
-					'body' => array(
-						'action' => 'elementor_clear_cache',
-					),
-				)
-			);
+			\Elementor\Plugin::instance()->files_manager->clear_cache();
 		}
 	}
 
