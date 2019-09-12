@@ -1,3 +1,11 @@
+## [1.7.4](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.3...v1.7.4) (2019-09-12)
+
+
+### Bug Fixes
+
+* allow local json parse for remote demo sites ([1a96f4b](https://github.com/Codeinwp/ti-onboarding/commit/1a96f4b))
+* allow local json parse for remote demo sites ([45f2ef3](https://github.com/Codeinwp/ti-onboarding/commit/45f2ef3))
+
 ## [1.7.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.2...v1.7.3) (2019-09-12)
 
 
