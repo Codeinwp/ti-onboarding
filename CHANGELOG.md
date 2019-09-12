@@ -1,3 +1,11 @@
+## [1.7.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.0...v1.7.1) (2019-09-12)
+
+
+### Bug Fixes
+
+* allow no front page setup ([b4f39b4](https://github.com/Codeinwp/ti-onboarding/commit/b4f39b4))
+* allow no front page setup ([b9c81ba](https://github.com/Codeinwp/ti-onboarding/commit/b9c81ba)), closes [Codeinwp/shop-isle-pro#456](https://github.com/Codeinwp/shop-isle-pro/issues/456)
+
 # [1.7.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.6.3...v1.7.0) (2019-09-11)
 
 
