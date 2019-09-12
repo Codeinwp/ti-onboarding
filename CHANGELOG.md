@@ -1,3 +1,11 @@
+## [1.7.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.1...v1.7.2) (2019-09-12)
+
+
+### Bug Fixes
+
+* remove ini_set calls ([f533007](https://github.com/Codeinwp/ti-onboarding/commit/f533007))
+* remove ini_set calls ([04b02ed](https://github.com/Codeinwp/ti-onboarding/commit/04b02ed)), closes [#86](https://github.com/Codeinwp/ti-onboarding/issues/86)
+
 ## [1.7.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.0...v1.7.1) (2019-09-12)
 
 
