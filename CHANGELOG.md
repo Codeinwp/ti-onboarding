@@ -1,3 +1,12 @@
+## [1.7.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.2...v1.7.3) (2019-09-12)
+
+
+### Bug Fixes
+
+* remove license check for remote sites disable ([b30af37](https://github.com/Codeinwp/ti-onboarding/commit/b30af37))
+* remove license check for remote sites disable ([ad91b91](https://github.com/Codeinwp/ti-onboarding/commit/ad91b91)), closes [#73](https://github.com/Codeinwp/ti-onboarding/issues/73)
+* remove license check for upsell sites disable ([aafe464](https://github.com/Codeinwp/ti-onboarding/commit/aafe464)), closes [#73](https://github.com/Codeinwp/ti-onboarding/issues/73)
+
 ## [1.7.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.1...v1.7.2) (2019-09-12)
 
 
