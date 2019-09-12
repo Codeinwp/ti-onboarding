@@ -392,10 +392,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_upsell_templates() {
-		if ( $this->valid_lic === true ) {
-			return array();
-		}
-
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
