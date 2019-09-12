@@ -38,11 +38,6 @@ class Themeisle_OB_Rest_Server {
 	private $data = array();
 
 	/**
-	 * @var bool
-	 */
-	private $valid_lic = false;
-
-	/**
 	 * Initialize the rest functionality.
 	 */
 	public function init() {
@@ -61,41 +56,6 @@ class Themeisle_OB_Rest_Server {
 		}
 
 		$this->theme_support = $theme_support[0];
-		$this->valid_lic     = $this->is_valid_lic();
-	}
-
-	/**
-	 * Check license
-	 *
-	 * @return bool
-	 */
-	private function is_valid_lic() {
-		if ( ! class_exists( '\ThemeisleSDK\Common\Module_Factory' ) ) {
-			return false;
-		}
-		$sdk_modules = \ThemeisleSDK\Common\Module_Factory::get_modules_map();
-		$theme       = get_stylesheet();
-
-		if ( $theme === 'neve' ) {
-			$theme = 'neve-pro-addon';
-		}
-
-		if ( ! array_key_exists( $theme, $sdk_modules ) ) {
-			return false;
-		}
-
-		if ( ! isset( $sdk_modules[ $theme ]['licenser'] ) ) {
-			return false;
-		}
-
-		$licenser = $sdk_modules[ $theme ]['licenser'];
-		$validity = $licenser->get_license_status();
-
-		if ( $validity === 'valid' ) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -393,10 +353,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_remote_templates() {
-		if ( $this->valid_lic === false ) {
-			return array();
-		}
-
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
@@ -436,10 +392,6 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_upsell_templates() {
-		if ( $this->valid_lic === true ) {
-			return array();
-		}
-
 		$returnable = array();
 
 		foreach ( $this->theme_support['editors'] as $editor ) {
