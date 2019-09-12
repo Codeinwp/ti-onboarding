@@ -362,7 +362,9 @@ class Themeisle_OB_Rest_Server {
 	 * @return array
 	 */
 	private function get_remote_templates() {
-
+		if ( ! isset( $this->theme_support['remote'] ) ) {
+			return [];
+		}
 		$returnable = array();
 		$cache_key  = sprintf( '_%s_templates_remote', md5( serialize( $this->theme_support['remote'] ) ) );
 
