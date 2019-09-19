@@ -78,11 +78,12 @@ class Themeisle_OB_Content_Importer {
 
 		if ( $body['source'] === 'remote' ) {
 			$this->logger->log( 'Saving remote XML', 'progress' );
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			global $wp_filesystem;
-			WP_Filesystem();
-			$content_file      = $wp_filesystem->get_contents( $content_file_url );
-			$content_file_path = $this->save_xhr_return_path( $content_file );
+
+			$response_file = wp_remote_get( $content_file_url );
+			if ( is_wp_error( $response_file ) ) {
+				$this->logger->log( "Error saving the remote file:  {$response_file->get_error_message()}.", 'success' );
+			}
+			$content_file_path = $this->save_xhr_return_path( wp_remote_retrieve_body( $response_file ) );
 			$this->logger->log( "Saved remote XML at path {$content_file_path}.", 'success' );
 		} else {
 			$this->logger->log( 'Using local XML.', 'success' );
@@ -146,13 +147,10 @@ class Themeisle_OB_Content_Importer {
 	public function save_xhr_return_path( $content ) {
 		$wp_upload_dir = wp_upload_dir( null, false );
 		$file_path     = $wp_upload_dir['basedir'] . '/themeisle-demo-import.xml';
-		ob_start();
-		echo $content;
-		$result = ob_get_clean();
 		require_once( ABSPATH . '/wp-admin/includes/file.php' );
 		global $wp_filesystem;
 		WP_Filesystem();
-		$wp_filesystem->put_contents( $file_path, $result );
+		$wp_filesystem->put_contents( $file_path, $content );
 
 		return $file_path;
 	}
