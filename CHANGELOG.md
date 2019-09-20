@@ -1,3 +1,11 @@
+## [1.7.6](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.5...v1.7.6) (2019-09-20)
+
+
+### Bug Fixes
+
+* improve XML remote file importing ([b30baca](https://github.com/Codeinwp/ti-onboarding/commit/b30baca))
+* improve XML remote file importing ([bf61816](https://github.com/Codeinwp/ti-onboarding/commit/bf61816))
+
 ## [1.7.5](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.4...v1.7.5) (2019-09-12)
 
 
