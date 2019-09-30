@@ -9,16 +9,21 @@
 			</div>
 			<div class="modal__content">
 				<template v-if="currentStep !== 'done' && currentStep !== 'error' && !importing ">
-					<div class="disclaimers">
-						<strong><i class="dashicons dashicons-info"></i>{{strings.note}}:</strong>
-						<ol>
+					<div class="disclaimers" :class="{ 'warning' : siteData.external_plugins}">
+						<strong>
+							<i class="dashicons dashicons-info"></i>
+							{{ siteData.external_plugins ? strings.external_plugins_notice : strings.note + ':'}}
+						</strong>
+						<ol v-if="siteData.external_plugins">
+							<li v-for="plugin in siteData.external_plugins">{{plugin}}</li>
+						</ol>
+						<ol v-else>
 							<li>{{strings.backup_disclaimer}}</li>
 							<li>{{strings.placeholders_disclaimer_new}}</li>
 							<li v-if="this.siteData.unsplash_gallery"><a :href="this.siteData.unsplash_gallery" target="_blank">{{strings.unsplash_gallery_link}}</a></li>
 						</ol>
 					</div>
-
-					<div class="import__options">
+					<div class="import__options" :class="{ 'disabled' : siteData.external_plugins}">
 						<h4>{{strings.general}}:</h4>
 						<ul class="features">
 							<li class="option_toggle">
@@ -72,12 +77,10 @@
 					<error-well v-if="errorMessage"></error-well>
 				</template>
 			</div>
-
-
 			<div class="modal__footer" v-if="! importing">
 				<template v-if="currentStep !== 'done' && currentStep !== 'error'">
 					<button class="button button-secondary" v-on:click="closeModal">{{strings.cancel_btn}}</button>
-					<button class="button button-primary" :disabled="! checIfShouldImport" v-on:click="startImport">
+					<button class="button button-primary" :disabled="! checIfShouldImport || siteData.external_plugins" v-on:click="startImport">
 						{{strings.import_btn}}
 					</button>
 				</template>
