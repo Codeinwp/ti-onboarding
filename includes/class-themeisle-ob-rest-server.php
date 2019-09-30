@@ -298,9 +298,10 @@ class Themeisle_OB_Rest_Server {
 	private function get_local_templates() {
 		$returnable = array();
 
-		$cache_key = sprintf( '_%s_templates_local', md5( serialize( $this->theme_support['local'] ) ) );
+		$cache_key   = sprintf( '_%s_templates_local', md5( serialize( $this->theme_support['local'] ) ) );
+		$cached_data = get_transient( $cache_key );
 
-		if ( false !== ( $cached_data = get_transient( $cache_key ) ) ) {
+		if ( false !== $cached_data ) {
 			return $cached_data;
 		}
 
@@ -363,12 +364,12 @@ class Themeisle_OB_Rest_Server {
 	 */
 	private function get_remote_templates() {
 		if ( ! isset( $this->theme_support['remote'] ) ) {
-			return [];
+			return array();
 		}
-		$returnable = array();
-		$cache_key  = sprintf( '_%s_templates_remote', md5( serialize( $this->theme_support['remote'] ) ) );
-
-		if ( false !== ( $cached_data = get_transient( $cache_key ) ) ) {
+		$returnable  = array();
+		$cache_key   = sprintf( '_%s_templates_remote', md5( serialize( $this->theme_support['remote'] ) ) );
+		$cached_data = get_transient( $cache_key );
+		if ( false !== $cached_data ) {
 			return $cached_data;
 		}
 
@@ -429,7 +430,7 @@ class Themeisle_OB_Rest_Server {
 				continue;
 			}
 			foreach ( $this->theme_support['upsell'][ $editor ] as $template_slug => $template_data ) {
-				$returnable[ $editor ][ $template_slug ]                  = [];
+				$returnable[ $editor ][ $template_slug ]                  = array();
 				$returnable[ $editor ][ $template_slug ]['title']         = esc_html( $template_data['title'] );
 				$returnable[ $editor ][ $template_slug ]['demo_url']      = esc_url( $template_data['url'] );
 				$returnable[ $editor ][ $template_slug ]['screenshot']    = esc_url( $template_data['screenshot'] );
