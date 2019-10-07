@@ -352,7 +352,7 @@ class Themeisle_OB_Rest_Server {
 
 				if ( isset( $template_data['external_plugins'] ) ) {
 					foreach ( $template_data['external_plugins'] as $plugin ) {
-						$returnable[ $editor ][ $template_slug ]['external_plugins'][] = $plugin['name'];
+						$returnable[ $editor ][ $template_slug ]['external_plugins'][ $plugin['name'] ] = $plugin['author_url'];
 					}
 				}
 			}
@@ -421,7 +421,7 @@ class Themeisle_OB_Rest_Server {
 						if ( $plugin['active'] ) {
 							continue;
 						}
-						$returnable[ $editor ][ $template_slug ]['external_plugins'][] = $plugin['name'];
+						$returnable[ $editor ][ $template_slug ]['external_plugins'][ $plugin['name'] ] = $plugin['author_url'];
 					}
 				}
 			}
