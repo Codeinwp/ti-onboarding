@@ -252,9 +252,8 @@ class Themeisle_OB_Content_Importer {
 
 		require_once 'helpers/class-themeisle-ob-importer-alterator.php';
 		$alterator = new Themeisle_OB_Importer_Alterator( $req_body );
-
-		$importer = new Themeisle_OB_WP_Import( $builder );
-		$result   = $importer->import( $file_path );
+		$importer  = new Themeisle_OB_WP_Import( $builder );
+		$result    = $importer->import( $file_path );
 
 		return $result;
 	}
