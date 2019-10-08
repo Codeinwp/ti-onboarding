@@ -1,3 +1,11 @@
+## [1.7.7](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.6...v1.7.7) (2019-10-08)
+
+
+### Bug Fixes
+
+* cli import not accounting for local json on remote sites ([de0a523](https://github.com/Codeinwp/ti-onboarding/commit/de0a523))
+* cli import not accounting for local json on remote sites ([b4bfc55](https://github.com/Codeinwp/ti-onboarding/commit/b4bfc55))
+
 ## [1.7.6](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.5...v1.7.6) (2019-09-20)
 
 
