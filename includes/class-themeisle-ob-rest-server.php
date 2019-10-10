@@ -349,6 +349,12 @@ class Themeisle_OB_Rest_Server {
 				if ( isset( $template_data['edit_content_redirect'] ) ) {
 					$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = esc_html( $template_data['edit_content_redirect'] );
 				}
+
+				if ( isset( $template_data['external_plugins'] ) ) {
+					foreach ( $template_data['external_plugins'] as $plugin ) {
+						$returnable[ $editor ][ $template_slug ]['external_plugins'][ $plugin['name'] ] = $plugin['author_url'];
+					}
+				}
 			}
 		}
 
@@ -410,6 +416,14 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['source']           = 'remote';
 				$returnable[ $editor ][ $template_slug ]['unsplash_gallery'] = isset( $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] ) ? $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] : '';
 
+				if ( isset( $template_data['external_plugins'] ) ) {
+					foreach ( $template_data['external_plugins'] as $plugin ) {
+						if ( $plugin['active'] ) {
+							continue;
+						}
+						$returnable[ $editor ][ $template_slug ]['external_plugins'][ $plugin['name'] ] = $plugin['author_url'];
+					}
+				}
 			}
 		}
 		set_transient( $cache_key, $returnable, DAY_IN_SECONDS );
