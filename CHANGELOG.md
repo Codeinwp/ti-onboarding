@@ -1,3 +1,11 @@
+## [1.7.8](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.7...v1.7.8) (2019-10-10)
+
+
+### Bug Fixes
+
+* external plugins handling ([106600a](https://github.com/Codeinwp/ti-onboarding/commit/106600a))
+* external plugins handling ([dadcb73](https://github.com/Codeinwp/ti-onboarding/commit/dadcb73)), closes [Codeinwp/neve-pro-addon#308](https://github.com/Codeinwp/neve-pro-addon/issues/308)
+
 ## [1.7.7](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.6...v1.7.7) (2019-10-08)
 
 
