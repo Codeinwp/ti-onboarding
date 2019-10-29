@@ -21,6 +21,7 @@ if ( ! class_exists( 'WP_Importer' ) ) {
 }
 
 class Themeisle_OB_WP_Import extends WP_Importer {
+	use Themeisle_OB_Image_Src_Handler;
 	/**
 	 * @var Themeisle_OB_WP_Import_Logger
 	 */
@@ -30,23 +31,23 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 	public $id; // WXR attachment ID
 	// information to import from WXR file
 	public $version;
-	public $posts         = array();
-	public $terms         = array();
-	public $categories    = array();
-	public $tags          = array();
-	public $base_url      = '';
+	public $posts = array();
+	public $terms = array();
+	public $categories = array();
+	public $tags = array();
+	public $base_url = '';
 	public $base_blog_url = '';
 	// mappings from old information to new
-	public $processed_posts      = array();
-	public $processed_terms      = array();
-	public $post_orphans         = array();
+	public $processed_posts = array();
+	public $processed_terms = array();
+	public $post_orphans = array();
 	public $processed_menu_items = array();
-	public $menu_item_orphans    = array();
-	public $missing_menu_items   = array();
-	public $fetch_attachments    = true;
-	public $url_remap            = array();
-	public $featured_images      = array();
-	public $page_builder         = null;
+	public $menu_item_orphans = array();
+	public $missing_menu_items = array();
+	public $fetch_attachments = true;
+	public $url_remap = array();
+	public $featured_images = array();
+	public $page_builder = null;
 
 	/**
 	 * Themeisle_OB_WP_Import constructor.
@@ -519,6 +520,13 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 							$meta_handler->filter_meta();
 							$this->logger->log( 'Filtered elementor meta.', 'success' );
 						}
+						if ( in_array( $key, array(
+							'tve_custom_css',
+							'tve_content_before_more',
+							'tve_updated_post'
+						) ) ) {
+							$value = $this->replace_image_urls( $value );
+						}
 						add_post_meta( $post_id, $key, $value );
 						do_action( 'import_post_meta', $post_id, $key, $value );
 						// if the post has a featured image, take note of this in case of remap
@@ -669,10 +677,10 @@ class Themeisle_OB_WP_Import extends WP_Importer {
 		wp_update_attachment_metadata( $post_id, wp_generate_attachment_metadata( $post_id, $upload['file'] ) );
 		// remap resized image URLs, works by stripping the extension and remapping the URL stub.
 		if ( preg_match( '!^image/!', $info['type'] ) ) {
-			$parts     = pathinfo( $url );
-			$name      = basename( $parts['basename'], ".{$parts['extension']}" ); // PATHINFO_FILENAME in PHP 5.2
-			$parts_new = pathinfo( $upload['url'] );
-			$name_new  = basename( $parts_new['basename'], ".{$parts_new['extension']}" );
+			$parts                                              = pathinfo( $url );
+			$name                                               = basename( $parts['basename'], ".{$parts['extension']}" ); // PATHINFO_FILENAME in PHP 5.2
+			$parts_new                                          = pathinfo( $upload['url'] );
+			$name_new                                           = basename( $parts_new['basename'], ".{$parts_new['extension']}" );
 			$this->url_remap[ $parts['dirname'] . '/' . $name ] = $parts_new['dirname'] . '/' . $name_new;
 		}
 		$this->logger->log( 'Processed attachment.', 'success' );
