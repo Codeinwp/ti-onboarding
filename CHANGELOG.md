@@ -1,3 +1,11 @@
+## [1.7.9](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.8...v1.7.9) (2019-10-31)
+
+
+### Bug Fixes
+
+* make sure thrive images get URL's changed ([4b3d899](https://github.com/Codeinwp/ti-onboarding/commit/4b3d899))
+* make sure thrive images get URL's changed ([6dacb5d](https://github.com/Codeinwp/ti-onboarding/commit/6dacb5d))
+
 ## [1.7.8](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.7...v1.7.8) (2019-10-10)
 
 
