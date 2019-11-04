@@ -49,10 +49,30 @@ class Themeisle_OB_Importer_Alterator {
 		$this->count_posts_by_post_type();
 		add_filter( 'wp_import_posts', array( $this, 'skip_shop_pages' ), 10 );
 		add_filter( 'wp_import_posts', array( $this, 'skip_posts' ), 10 );
+		add_filter( 'wp_import_posts', array( $this, 'prefix_front_page_and_blog' ), 10 );
 		add_filter( 'wp_import_terms', array( $this, 'skip_terms' ), 10 );
 		add_filter( 'wp_insert_post_data', array( $this, 'encode_post_content' ), 10, 2 );
 		add_filter( 'wp_import_nav_menu_item_args', array( $this, 'change_nav_menu_item_link' ), 10, 2 );
 		add_filter( 'intermediate_image_sizes_advanced', '__return_null' );
+	}
+
+	/**
+	 * Prefix Front / Blog page slug.
+	 *
+	 * @param array $posts the posts to import array.
+	 *
+	 * @return array
+	 */
+	public function prefix_front_page_and_blog( $posts ) {
+		foreach ( $posts as $index => $post ) {
+			if ( $post['post_name'] === $this->site_json_data['frontPage']['front_page'] ||
+				$post['post_name'] === $this->site_json_data['frontPage']['blog_page']
+			) {
+				$posts[ $index ]['post_name'] = $this->site_json_data['demoSlug'] . '_' . $posts[ $index ]['post_name'];
+			}
+		}
+
+		return $posts;
 	}
 
 	/**
@@ -86,10 +106,7 @@ class Themeisle_OB_Importer_Alterator {
 	/**
 	 * Skip posts if there are more than 2 already.
 	 *
-	 * @param array $data     post data.
-	 * @param array $meta     meta.
-	 * @param array $comments comments.
-	 * @param array $terms    terms.
+	 * @param array $posts post data.
 	 *
 	 * @return array
 	 */

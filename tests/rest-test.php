@@ -151,6 +151,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 				),
 				'shop_pages'  => null,
 				'source'      => 'local',
+				'demoSlug'    => 'test-demo'
 			),
 		) );
 
@@ -162,7 +163,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 		//Test that front page has been set up.
 		$this->assertEquals( 'page', get_option( 'show_on_front' ) );
 		//Test that front page WP_Post object exists and is set as front page.
-		$front_page = get_page_by_path( $this->json['front_page']['front_page'] );
+		$front_page = get_page_by_path( 'test-demo_' . $this->json['front_page']['front_page'] );
 		$this->assertInstanceOf( 'WP_Post', $front_page );
 		$this->assertNotEmpty( $front_page->ID );
 		$this->assertEquals( get_option( 'page_on_front' ), $front_page->ID );
