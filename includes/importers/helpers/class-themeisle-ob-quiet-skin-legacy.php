@@ -11,11 +11,11 @@
  */
 
 /**
- * Class Themeisle_OB_Quiet_Skin
+ * Class Themeisle_OB_Quiet_Skin_Legacy
  *
  * Silences plugin install and activate.
  */
-class Themeisle_OB_Quiet_Skin extends WP_Upgrader_Skin {
+class Themeisle_OB_Quiet_Skin_Legacy extends WP_Upgrader_Skin {
 	/**
 	 * Done Header.
 	 *
@@ -34,9 +34,8 @@ class Themeisle_OB_Quiet_Skin extends WP_Upgrader_Skin {
 	 * Feedback function overwrite.
 	 *
 	 * @param string $string feedback string.
-	 * @param array $args Optional text replacements.
 	 */
-	public function feedback( $string, ...$args ) {
+	public function feedback( $string ) {
 		// Keep install quiet.
 	}
 
