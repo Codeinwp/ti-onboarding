@@ -34,8 +34,9 @@ class Themeisle_OB_Quiet_Skin extends WP_Upgrader_Skin {
 	 * Feedback function overwrite.
 	 *
 	 * @param string $string feedback string.
+	 * @param array $args Optional text replacements.
 	 */
-	public function feedback( $string ) {
+	public function feedback( $string, $args ) {
 		// Keep install quiet.
 	}
 
