@@ -43,7 +43,7 @@
     "sass-loader": "^7.1.0",
     "semantic-release": "^15.13.30",
     "style-loader": "^0.23.1",
-    "uglify-js": "^3.6.8",
+    "uglify-js": "^3.6.9",
     "vue-style-loader": "^4.1.1",
     "vueify": "^9.4.1",
     "watchify": "^3.11.1"
