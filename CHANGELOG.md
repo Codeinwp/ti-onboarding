@@ -1,3 +1,12 @@
+## [1.7.10](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.9...v1.7.10) (2019-11-13)
+
+
+### Bug Fixes
+
+* legacy fix for upgrade skin in wp 5.3 ([892adca](https://github.com/Codeinwp/ti-onboarding/commit/892adcaf8fefb8960cfbdfddb6e3558683f15114))
+* legacy fix for upgrade skin in wp 5.3 ([c15ff08](https://github.com/Codeinwp/ti-onboarding/commit/c15ff081f0acaf96bf2974fd6a441ac1b39dabfa))
+* sniff for latest wpcs ([ab43403](https://github.com/Codeinwp/ti-onboarding/commit/ab4340320aff764b17a2adc7cb03967d191417fc))
+
 ## [1.7.9](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.8...v1.7.9) (2019-10-31)
 
 
