@@ -13,6 +13,8 @@
  * @package themeisle-onboarding
  */
 class Themeisle_OB_Content_Importer {
+	use Themeisle_OB;
+
 	private $logger = null;
 
 	/**
@@ -121,7 +123,7 @@ class Themeisle_OB_Content_Importer {
 
 		// Set shop pages.
 		if ( isset( $body['shopPages'] ) ) {
-			$this->setup_shop_pages( $body['shopPages'] );
+			$this->setup_shop_pages( $body['shopPages'], $body['demoSlug'] );
 		}
 		do_action( 'themeisle_ob_after_shop_pages_setup' );
 
@@ -176,14 +178,14 @@ class Themeisle_OB_Content_Importer {
 		update_option( 'show_on_front', 'page' );
 
 		if ( isset( $args['front_page'] ) && $args['front_page'] !== null ) {
-			$front_page_obj = get_page_by_path( $demo_slug . '_' . $args['front_page'] );
+			$front_page_obj = get_page_by_path( $this->cleanup_page_slug( $args['front_page'], $demo_slug ) );
 			if ( isset( $front_page_obj->ID ) ) {
 				update_option( 'page_on_front', $front_page_obj->ID );
 			}
 		}
 
 		if ( isset( $args['blog_page'] ) && $args['blog_page'] !== null ) {
-			$blog_page_obj = get_page_by_path( $demo_slug . '_' . $args['blog_page'] );
+			$blog_page_obj = get_page_by_path( $this->cleanup_page_slug( $args['blog_page'], $demo_slug ) );
 			if ( isset( $blog_page_obj->ID ) ) {
 				update_option( 'page_for_posts', $blog_page_obj->ID );
 			}
@@ -199,9 +201,10 @@ class Themeisle_OB_Content_Importer {
 	/**
 	 * Set up shop pages options by `post_name`.
 	 *
-	 * @param array $pages the shop pages array.
+	 * @param array  $pages     the shop pages array.
+	 * @param string $demo_slug the demo slug.
 	 */
-	public function setup_shop_pages( $pages ) {
+	public function setup_shop_pages( $pages, $demo_slug ) {
 		$this->logger->log( 'Setting up shop page.', 'progress' );
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			$this->logger->log( 'No WooCommerce.', 'success' );
@@ -215,7 +218,7 @@ class Themeisle_OB_Content_Importer {
 		}
 		foreach ( $pages as $option_id => $slug ) {
 			if ( ! empty( $slug ) ) {
-				$page_object = get_page_by_path( $slug );
+				$page_object = get_page_by_path( $this->cleanup_page_slug( $slug, $demo_slug ) );
 				if ( isset( $page_object->ID ) ) {
 					update_option( $option_id, $page_object->ID );
 				}

@@ -41,7 +41,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 		wp_set_current_user( self::$admin_id );
 		add_theme_support( 'themeisle-demo-import', array(
 			'editors' => array(
-				'elementor'
+				'elementor',
 			),
 			'local'   => array(
 				'elementor' => array(
@@ -94,8 +94,8 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 		$request->set_body_params( array(
 				'data' => array(
 					'theme_mods' => $this->json['theme_mods'],
-					'source_url' => 'https://demo.themeisle.com/neve-charity'
-				)
+					'source_url' => 'https://demo.themeisle.com/neve-charity',
+				),
 			)
 		);
 
@@ -151,7 +151,7 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 				),
 				'shop_pages'  => null,
 				'source'      => 'local',
-				'demoSlug'    => 'test-demo'
+				'demoSlug'    => 'test-demo',
 			),
 		) );
 
@@ -163,10 +163,10 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 		//Test that front page has been set up.
 		$this->assertEquals( 'page', get_option( 'show_on_front' ) );
 		//Test that front page WP_Post object exists and is set as front page.
-		$front_page = get_page_by_path( 'test-demo_' . $this->json['front_page']['front_page'] );
+		$front_page_id = get_option( 'page_on_front' );
+		$front_page    = get_post( $front_page_id );
 		$this->assertInstanceOf( 'WP_Post', $front_page );
 		$this->assertNotEmpty( $front_page->ID );
-		$this->assertEquals( get_option( 'page_on_front' ), $front_page->ID );
 	}
 
 	/**
@@ -182,11 +182,11 @@ class Onboarding_Rest_Test extends WP_UnitTestCase {
 			'data' => array(
 				'blog-sidebar' => array(
 					"search-2"       => array(
-						'title' => 'Search Widget Test'
+						'title' => 'Search Widget Test',
 					),
 					'recent-posts-2' => array(
 						'title'  => 'Recent Posts Widget Test',
-						'number' => 5
+						'number' => 5,
 					),
 				),
 			),

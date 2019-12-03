@@ -10,10 +10,12 @@
  * @package    themeisle-onboarding
  */
 
+
 /**
  * Class Themeisle_OB_Importer_Alterator
  */
 class Themeisle_OB_Importer_Alterator {
+	use Themeisle_OB;
 
 	/**
 	 * Post map. Holds post type / count.
@@ -49,7 +51,7 @@ class Themeisle_OB_Importer_Alterator {
 		$this->count_posts_by_post_type();
 		add_filter( 'wp_import_posts', array( $this, 'skip_shop_pages' ), 10 );
 		add_filter( 'wp_import_posts', array( $this, 'skip_posts' ), 10 );
-		add_filter( 'wp_import_posts', array( $this, 'prefix_front_page_and_blog' ), 10 );
+		add_filter( 'wp_import_posts', array( $this, 'drop_slug_and_prefix_pages' ), 10 );
 		add_filter( 'wp_import_terms', array( $this, 'skip_terms' ), 10 );
 		add_filter( 'wp_insert_post_data', array( $this, 'encode_post_content' ), 10, 2 );
 		add_filter( 'wp_import_nav_menu_item_args', array( $this, 'change_nav_menu_item_link' ), 10, 2 );
@@ -63,13 +65,12 @@ class Themeisle_OB_Importer_Alterator {
 	 *
 	 * @return array
 	 */
-	public function prefix_front_page_and_blog( $posts ) {
+	public function drop_slug_and_prefix_pages( $posts ) {
 		foreach ( $posts as $index => $post ) {
-			if ( $post['post_name'] === $this->site_json_data['frontPage']['front_page'] ||
-				$post['post_name'] === $this->site_json_data['frontPage']['blog_page']
-			) {
-				$posts[ $index ]['post_name'] = $this->site_json_data['demoSlug'] . '_' . $posts[ $index ]['post_name'];
+			if ( $post['post_type'] !== 'page' ) {
+				continue;
 			}
+			$posts[ $index ]['post_name'] = $this->cleanup_page_slug( $post['post_name'], $this->site_json_data['demoSlug'] );
 		}
 
 		return $posts;
@@ -78,7 +79,7 @@ class Themeisle_OB_Importer_Alterator {
 	/**
 	 * Change nav menu items link if needed.
 	 *
-	 * @param array $args menu item args.
+	 * @param array  $args              menu item args.
 	 * @param string $import_source_url the source url.
 	 *
 	 * @return array
