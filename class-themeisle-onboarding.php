@@ -139,7 +139,7 @@ class Themeisle_Onboarding {
 
 		$api = new Themeisle_OB_Rest_Server();
 		$api->init();
-		require_once 'includes/importers/helpers/trait-themeisle-ob-image-src-handler.php';
+		require_once 'includes/importers/helpers/trait-themeisle-ob.php';
 	}
 
 	/**

@@ -5,7 +5,7 @@
  * @package trait-image-handling.php
  */
 
-trait Themeisle_OB_Image_Src_Handler {
+trait Themeisle_OB {
 	/**
 	 * A list of allowed mimes.
 	 *
@@ -92,5 +92,23 @@ trait Themeisle_OB_Image_Src_Handler {
 		$new_url = esc_url( $uploads_url . '/' . join( '/', $url_parts['path'] ) );
 
 		return str_replace( $old_url, $new_url, $url );
+	}
+
+	/**
+	 * Hash the demo slug and prefix the page name with it. Drop words like demo, neve, or the demo slug from page slug.
+	 *
+	 * @param string $slug      page slug.
+	 * @param string $demo_slug demo slug.
+	 *
+	 * @return string
+	 */
+	public function cleanup_page_slug( $slug, $demo_slug ) {
+		$hash = substr( md5( $demo_slug ), 0, 5 );
+		$slug = str_replace( $demo_slug, '', $slug );
+		$slug = str_replace( 'demo', '', $slug );
+		$slug = ltrim( $slug, '-' );
+		$slug = $hash . '-' . $slug;
+
+		return $slug;
 	}
 }
