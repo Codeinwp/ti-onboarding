@@ -1,3 +1,11 @@
+## [1.7.12](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.11...v1.7.12) (2019-12-03)
+
+
+### Bug Fixes
+
+* import modal edit action button not working for divi and thrive ([adf314f](https://github.com/Codeinwp/ti-onboarding/commit/adf314fbd452e1019dfd8f25cdbd270ab1d95188))
+* import modal edit action button not working for divi and thrive ([f56ac00](https://github.com/Codeinwp/ti-onboarding/commit/f56ac0033c5625f07dce93becb0efde46ad3141d)), closes [Codeinwp/neve-pro-addon#423](https://github.com/Codeinwp/neve-pro-addon/issues/423)
+
 ## [1.7.11](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.10...v1.7.11) (2019-12-03)
 
 
