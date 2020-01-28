@@ -399,6 +399,7 @@ class Themeisle_OB_Rest_Server {
 					global $wp_filesystem;
 					WP_Filesystem();
 					$json_body = $wp_filesystem->get_contents( $template_data['local_json'] );
+					$json_body = json_decode( $json_body, true );
 				} else {
 					$remote_url = ( isset( $template_data['remote_json'] ) ? $template_data['remote_json'] : $template_data['url'] );
 					$url_parts  = explode( '/', rtrim( $remote_url, '/' ) );
@@ -425,7 +426,6 @@ class Themeisle_OB_Rest_Server {
 						$json_body = $bulk_jsons[ $slug ];
 					}
 				}
-
 				$returnable[ $editor ][ $template_slug ]                     = $json_body;
 				$returnable[ $editor ][ $template_slug ]['title']            = esc_html( $template_data['title'] );
 				$returnable[ $editor ][ $template_slug ]['demo_url']         = esc_url( $template_data['url'] );
