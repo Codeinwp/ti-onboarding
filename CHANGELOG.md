@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.12...v1.8.0) (2020-01-28)
+
+
+### Features
+
+* use bulk endpoint for json schema ([ef99b97](https://github.com/Codeinwp/ti-onboarding/commit/ef99b97fcfdeacdae35ff20b2f7ab698aa8f1ebf))
+
 ## [1.7.12](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.11...v1.7.12) (2019-12-03)
 
 
