@@ -99,7 +99,7 @@ class Themeisle_OB_Importer_Alterator {
 	 * @return array
 	 */
 	public function encode_post_content( $data, $postarr ) {
-		if ( $this->site_json_data['editor'] === 'gutenberg' ) {
+		if ( isset( $this->site_json_data['editor'] ) && $this->site_json_data['editor'] === 'gutenberg' ) {
 			return $data;
 		}
 		$data['post_content'] = utf8_encode( $data['post_content'] );
