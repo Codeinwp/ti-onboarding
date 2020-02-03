@@ -12,11 +12,6 @@
       "homepage": "https://themeisle.com"
     }
   ],
-  "autoload": {
-    "files": [
-      "load.php"
-    ]
-  },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4 || ^0.5.0 || ^0.6.0",
     "squizlabs/php_codesniffer": "^3.1",
