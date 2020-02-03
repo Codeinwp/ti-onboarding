@@ -1,3 +1,10 @@
+## [1.8.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.8.1...v1.8.2) (2020-02-03)
+
+
+### Bug Fixes
+
+* remove autoloaded file ([9856ef4](https://github.com/Codeinwp/ti-onboarding/commit/9856ef45e64bbc93b3423429ebfa9fd5ce46cb03))
+
 ## [1.8.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.8.0...v1.8.1) (2020-02-03)
 
 
