@@ -1,3 +1,11 @@
+## [1.8.1](https://github.com/Codeinwp/ti-onboarding/compare/v1.8.0...v1.8.1) (2020-02-03)
+
+
+### Bug Fixes
+
+* apostrophes for gutenberg demos - disable UTF-8  encode for content ([c094f76](https://github.com/Codeinwp/ti-onboarding/commit/c094f76af37c0f8caf29f3887eafa0d7cb635dbe))
+* apostrophes for gutenberg demos - disable UTF-8  encode for content ([8f6ac52](https://github.com/Codeinwp/ti-onboarding/commit/8f6ac52e57e34411cd652352007b8727fa71d198)), closes [Codeinwp/neve#1268](https://github.com/Codeinwp/neve/issues/1268)
+
 # [1.8.0](https://github.com/Codeinwp/ti-onboarding/compare/v1.7.12...v1.8.0) (2020-01-28)
 
 
