@@ -1,3 +1,10 @@
+## [1.8.3](https://github.com/Codeinwp/ti-onboarding/compare/v1.8.2...v1.8.3) (2020-06-25)
+
+
+### Bug Fixes
+
+* rename unsplash occurances ([89795fb](https://github.com/Codeinwp/ti-onboarding/commit/89795fbf66765ec22a94228ca4b5612193e4cf42))
+
 ## [1.8.2](https://github.com/Codeinwp/ti-onboarding/compare/v1.8.1...v1.8.2) (2020-02-03)
 
 
