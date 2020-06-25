@@ -333,7 +333,7 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['content_file']          = get_template_directory() . '/onboarding/' . $template_slug . '/export.xml';
 				$returnable[ $editor ][ $template_slug ]['source']                = 'local';
 				$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = '';
-				$returnable[ $editor ][ $template_slug ]['unsplash_gallery']      = isset( $this->theme_support['local'][ $editor ][ $template_slug ]['unsplash_gallery'] ) ? $this->theme_support['local'][ $editor ][ $template_slug ]['unsplash_gallery'] : '';
+				$returnable[ $editor ][ $template_slug ]['images_gallery']      = isset( $this->theme_support['local'][ $editor ][ $template_slug ]['images_gallery'] ) ? $this->theme_support['local'][ $editor ][ $template_slug ]['images_gallery'] : '';
 
 				$ss_extension = '.png';
 				if ( file_exists( get_template_directory() . '/onboarding/' . $template_slug . '/screenshot.jpg' ) ) {
@@ -432,7 +432,7 @@ class Themeisle_OB_Rest_Server {
 				$returnable[ $editor ][ $template_slug ]['screenshot']            = esc_url( $template_data['screenshot'] );
 				$returnable[ $editor ][ $template_slug ]['source']                = 'remote';
 				$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = '';
-				$returnable[ $editor ][ $template_slug ]['unsplash_gallery']      = isset( $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] ) ? $this->theme_support['remote'][ $editor ][ $template_slug ]['unsplash_gallery'] : '';
+				$returnable[ $editor ][ $template_slug ]['images_gallery']      = isset( $this->theme_support['remote'][ $editor ][ $template_slug ]['images_gallery'] ) ? $this->theme_support['remote'][ $editor ][ $template_slug ]['images_gallery'] : '';
 
 				if ( isset( $template_data['edit_content_redirect'] ) ) {
 					$returnable[ $editor ][ $template_slug ]['edit_content_redirect'] = esc_html( $template_data['edit_content_redirect'] );
