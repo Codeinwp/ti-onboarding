@@ -22,8 +22,8 @@
 						<ol v-else>
 							<li>{{strings.backup_disclaimer}}</li>
 							<li>{{strings.placeholders_disclaimer_new}}</li>
-							<li v-if="this.siteData.unsplash_gallery"><a :href="this.siteData.unsplash_gallery"
-									target="_blank">{{strings.unsplash_gallery_link}}</a></li>
+							<li v-if="this.siteData.images_gallery"><a :href="this.siteData.images_gallery"
+									target="_blank">{{strings.images_gallery_link}}</a></li>
 						</ol>
 					</div>
 					<div class="import__options" :class="{ 'disabled' : siteData.external_plugins}">
